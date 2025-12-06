@@ -90,11 +90,11 @@ const Hero = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.2, duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-strong text-sm font-semibold text-red-400 mb-8 hover-glow group cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full glass-strong text-sm font-semibold text-red-400 mb-6 md:mb-8 hover-glow group cursor-pointer max-w-[95vw] mx-auto z-20"
                     >
-                        <Zap size={16} className="text-red-500 fill-red-500 group-hover:animate-pulse" />
-                        <span className="tracking-wider uppercase text-xs font-bold">Sistema de Alto Rendimiento</span>
-                        <Sparkles size={14} className="text-orange-400 opacity-70" />
+                        <Zap size={16} className="text-red-500 fill-red-500 group-hover:animate-pulse shrink-0" />
+                        <span className="tracking-wider uppercase text-[10px] md:text-xs font-bold truncate">Sistema de Alto Rendimiento</span>
+                        <Sparkles size={14} className="text-orange-400 opacity-70 shrink-0" />
                     </motion.div>
 
                     {/* Main Heading */}

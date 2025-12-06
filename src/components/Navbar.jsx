@@ -17,7 +17,7 @@ const Navbar = () => {
     const menuItems = ['Inicio', 'Nosotros', 'Planes', 'Contacto'];
 
     return (
-        <nav className={`fixed w-full z-50 top-0 left-0 transition-all duration-500 ${scrolled
+        <nav className={`fixed w-full top-0 left-0 transition-all duration-500 ${isOpen ? 'z-[999]' : 'z-50'} ${scrolled
             ? 'glass-strong border-b border-white/10 shadow-2xl'
             : 'bg-transparent border-b border-white/5'
             }`}>
@@ -93,8 +93,10 @@ const Navbar = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[60]"
+                            className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-md z-[60] cursor-pointer touch-none"
                             onClick={() => setIsOpen(false)}
+                            onTouchStart={() => setIsOpen(false)}
+                            onMouseDown={() => setIsOpen(false)}
                         />
 
                         {/* Sidebar Drawer */}
