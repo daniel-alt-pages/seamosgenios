@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Rocket, Target, Users, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Rocket, Target, Users, ChevronRight, ChevronLeft, GraduationCap, Home, Wifi, Zap } from 'lucide-react';
 
 const slides = [
     {
@@ -36,10 +36,69 @@ const About = () => {
     return (
         <section className="py-24 bg-black relative overflow-hidden" id="nosotros">
             {/* Shapes */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px]" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[120px]" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px]" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-600/5 rounded-full blur-[120px]" />
 
             <div className="container mx-auto px-4 relative z-10">
+                {/* 100% Virtual Section - Moved to Top */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-24"
+                >
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl md:text-4xl font-black mb-4">
+                            El Poder de ser <span className="text-fire-animated">100% Virtual</span>
+                        </h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {/* Point 1 */}
+                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors group">
+                            <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 mb-4 group-hover:scale-110 transition-transform">
+                                <GraduationCap size={24} />
+                            </div>
+                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Acceso a los Mejores</h4>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                                Mentores de la U. Nacional, ICESI, UIS y U. de los Andes.
+                            </p>
+                        </div>
+
+                        {/* Point 2 */}
+                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors group">
+                            <div className="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 mb-4 group-hover:scale-110 transition-transform">
+                                <Home size={24} />
+                            </div>
+                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Cero Desplazamientos</h4>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                                Más tiempo para estudiar desde la comodidad de sus casas.
+                            </p>
+                        </div>
+
+                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors group">
+                            <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 mb-4 group-hover:scale-110 transition-transform">
+                                <Wifi size={24} />
+                            </div>
+                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Flexibilidad Total</h4>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                                Clases en vivo grabadas y disponibles 24/7 en nuestra nube privada.
+                            </p>
+                        </div>
+
+                        {/* Point 4 */}
+                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors group">
+                            <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 mb-4 group-hover:scale-110 transition-transform">
+                                <Zap size={24} />
+                            </div>
+                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Disciplina Digital</h4>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                                Aprendizaje de autogestión y herramientas que usarán en la universidad.
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
                     {/* Text Content */}
@@ -48,44 +107,35 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-black mb-8 text-white">
+                        <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
                             Más que un PreICFES, <br />
-                            somos una <span className="text-gradient from-blue-400 to-purple-500">Revolución</span>
+                            somos una <span className="text-fire-animated">Revolución</span>
                         </h2>
+                        <p className="text-lg text-gray-300 mb-10 leading-relaxed font-light">
+                            Somos un movimiento de impacto social comprometido a ofrecer todas las herramientas y consejos para el éxito de sus estudiantes. Los acompañamos en todo el trayecto.
+                        </p>
 
                         <div className="space-y-8">
                             <div className="flex gap-4">
-                                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
                                     <Rocket size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white mb-2">Misión Sin Límites</h3>
+                                    <h3 className="text-xl font-bold mb-2 text-fire-animated">Misión</h3>
                                     <p className="text-gray-400 leading-relaxed">
-                                        Nacimos para desafiar el sistema tradicional. Creemos que cada estudiante tiene un genio interior esperando ser desbloqueado con la metodología correcta.
+                                        Transformar vidas brindando herramientas reales para abrir las puertas del futuro académico de cualquier estudiante.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="flex gap-4">
-                                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+                                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
                                     <Target size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white mb-2">Resultados Comprobados</h3>
+                                    <h3 className="text-xl font-bold mb-2 text-fire-animated">Visión</h3>
                                     <p className="text-gray-400 leading-relaxed">
-                                        Nuestra metodología híbrida (En vivo + Plataforma IA) ha llevado a cientos de estudiantes a las mejores universidades del país.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex gap-4">
-                                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400">
-                                    <Users size={24} />
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-2">Comunidad de Genios</h3>
-                                    <p className="text-gray-400 leading-relaxed">
-                                        No estudias solo. Te unes a una comunidad vibrante de soñadores y hacedores que se impulsan mutuamente hacia el éxito.
+                                        Democratizar la educación en Colombia y ser el programa virtual líder, comprometido con la calidad, el impacto social y la oportunidad para todos.
                                     </p>
                                 </div>
                             </div>
@@ -123,7 +173,7 @@ const About = () => {
                                         transition={{ duration: 0.5 }}
                                         className="absolute inset-0 p-1 flex items-center justify-center"
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-purple-900/10 z-0" />
+                                        <div className="absolute inset-0 bg-gradient-to-br from-red-900/10 to-orange-900/10 z-0" />
 
                                         <img
                                             src={slides[currentSlide].src}
@@ -167,6 +217,8 @@ const About = () => {
                         </div>
                     </motion.div>
                 </div>
+
+
             </div>
         </section>
     );

@@ -111,10 +111,10 @@ const Ranking = () => {
                     </div>
 
                     <h2 className="text-4xl md:text-6xl font-black mb-6 text-white">
-                        RESULTADOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">DESTACADOS</span>
+                        RESULTADOS <span className="text-fire-animated">DESTACADOS</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                        Estos son los puntajes reales de nuestros estudiantes en simulacros recientes.
+                        Estos son los puntajes reales de nuestros estudiantes en la prueba oficial de agosto 2025.
                         Una muestra del potencial que desbloqueamos juntos.
                     </p>
                 </motion.div>

@@ -105,7 +105,7 @@ const Hero = () => {
                         className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-tight leading-[0.95] text-white"
                     >
                         DESATA TU <br />
-                        <span className="text-gradient neon-text-subtle inline-block mt-2">POTENCIAL</span>
+                        <span className="text-fire-animated neon-text-subtle inline-block mt-2">POTENCIAL</span>
                     </motion.h1>
 
                     {/* Subtitle */}
@@ -117,7 +117,7 @@ const Hero = () => {
                     >
                         La fusión definitiva entre <span className="text-white font-semibold">Tecnología</span> y <span className="text-white font-semibold">Neurociencia</span>.
                         <br className="hidden md:block" />
-                        Prepárate para el ICFES con el sistema que está <span className="text-gradient font-semibold">redefiniendo la educación</span>.
+                        Prepárate para el ICFES con el sistema que está <span className="text-fire-animated font-semibold">redefiniendo la educación</span>.
                     </motion.p>
 
                     {/* FASE 1: Strategic Start Date Banner */}
@@ -129,7 +129,7 @@ const Hero = () => {
                     >
                         <Calendar className="text-red-400 w-5 h-5" />
                         <span className="text-lg md:text-xl font-black text-white tracking-wide">
-                            INICIO DE CLASES: <span className="text-gradient">10 DE DICIEMBRE</span>
+                            INICIO DE CLASES: <span className="text-fire-animated">10 DE DICIEMBRE</span>
                         </span>
                     </motion.div>
 

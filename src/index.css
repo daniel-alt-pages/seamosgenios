@@ -177,6 +177,20 @@ html {
   }
 }
 
+@keyframes fire-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -222,6 +236,18 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Fire Text Animation */
+.text-fire-animated {
+  background: linear-gradient(to right,     #DC2626 0%,     #F97316 25%,     #DC2626 50%,     #F97316 75%,     #DC2626 100%   );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fire-flow 4s linear infinite;
+  /* Ensure contrast */
+  filter: drop-shadow(0 0 1px rgba(220, 38, 38, 0.3));
 }
 
 /* Borders */

@@ -96,7 +96,7 @@ const CourseTimeline = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">
-                        Evolución del <span className="text-gradient">Ciclo de Ventas</span>
+                        Evolución del <span className="text-fire-animated">Ciclo de Ventas</span>
                     </h2>
                     <p className="text-gray-400">
                         Aprovecha los descuentos por inscripción anticipada. El precio base es <span className="text-white font-bold line-through">$500.000</span>.
@@ -123,8 +123,8 @@ const CourseTimeline = () => {
                                     }`} />
 
                                 <div className={`p-6 rounded-2xl border transition-all duration-300 ${isUnlocked
-                                        ? 'bg-gradient-to-r from-white/5 to-transparent border-red-500/30 shadow-lg shadow-red-900/10'
-                                        : 'bg-transparent border-white/5 opacity-60'
+                                    ? 'bg-gradient-to-r from-white/5 to-transparent border-red-500/30 shadow-lg shadow-red-900/10'
+                                    : 'bg-transparent border-white/5 opacity-60'
                                     }`}>
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
 

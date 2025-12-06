@@ -102,7 +102,7 @@ const Pricing = () => {
                     </div>
 
                     <h2 className="text-4xl md:text-6xl font-black text-center mb-6 text-white">
-                        Elige tu <span className="text-gradient">Camino</span>
+                        Elige tu <span className="text-fire-animated">Camino</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
                         Planes diseñados para adaptarse a tus necesidades y objetivos académicos
