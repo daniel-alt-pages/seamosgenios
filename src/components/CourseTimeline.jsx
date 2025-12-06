@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Activity, TrendingUp, Calendar, CheckCircle2, Lock, Timer, ShoppingCart } from 'lucide-react';
-import { getTimeRemaining, formatDate } from '../utils/pricingLogic';
+import { Lock, ShoppingCart } from 'lucide-react';
+import { getTimeRemaining } from '../utils/pricingLogic';
 
 const CourseTimeline = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -14,7 +14,7 @@ const CourseTimeline = () => {
     const timelineData = [
         {
             title: "Fase 1: Lanzamiento",
-            dateLabel: "Preventa Activa",
+            dateLabel: "Hasta 10 Dic",
             targetDate: new Date(currentYear, 11, 10), // 10 Dic
             status: "En Curso",
             description: "Venta habilitada para inicio 10 Dic.",
@@ -70,8 +70,6 @@ const CourseTimeline = () => {
         const countdownInterval = setInterval(() => {
             const newCountdowns = {};
             timelineData.forEach((item, index) => {
-                // Cuenta regresiva para la fecha de "Apertura" (unlockDate) si no ha llegado
-                // O cuenta regresiva para el "Inicio/Objetivo" (targetDate) si ya abrió
                 const now = new Date();
                 const target = now < item.unlockDate ? item.unlockDate : item.targetDate;
                 newCountdowns[index] = getTimeRemaining(target);
@@ -80,10 +78,10 @@ const CourseTimeline = () => {
         }, 1000);
 
         return () => clearInterval(countdownInterval);
-    }, []);
+    }, [timelineData]);
 
     return (
-        <section className="py-24 bg-black relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-grid-pattern opacity-30" />
             <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px]" />
@@ -95,15 +93,17 @@ const CourseTimeline = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">
-                        Evolución del <span className="text-fire-animated">Ciclo de Ventas</span>
+                    <h2 className="text-3xl md:text-5xl font-black mb-6 text-white leading-tight">
+                        Evolución de Precios <br />
+                        <span className="text-fire-animated">Calendarios A y B</span>
                     </h2>
-                    <p className="text-gray-400">
-                        Aprovecha los descuentos por inscripción anticipada. El precio base es <span className="text-white font-bold line-through">$500.000</span>.
+                    <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                        El valor de la inversión aumenta a medida que se acerca la fecha de inicio. <br />
+                        <span className="text-green-400 font-bold">¡Asegura tu cupo hoy y congela el precio más bajo!</span>
                     </p>
                 </motion.div>
 
-                <div className="relative border-l border-white/10 ml-4 md:ml-auto md:mx-auto max-w-4xl pl-8 md:pl-0">
+                <div className="relative ml-8 md:mx-auto max-w-4xl pl-16 md:pl-0">
                     {timelineData.map((item, index) => {
                         const isUnlocked = currentDate >= item.unlockDate;
                         const isPast = currentDate > item.targetDate;
@@ -118,76 +118,146 @@ const CourseTimeline = () => {
                                 transition={{ delay: index * 0.1 }}
                                 className="mb-12 relative"
                             >
-                                {/* Dot on Timeline */}
-                                <div className={`absolute -left-[41px] top-6 w-5 h-5 rounded-full border-4 border-black ${isPast ? 'bg-gray-600' : isUnlocked ? 'bg-red-500 animate-pulse' : 'bg-gray-800'
+                                {/* Stylized Dot and Connector */}
+
+                                {/* Vertical Line Segment (Connecting to next) */}
+                                {index !== timelineData.length - 1 && (
+                                    <div className={`absolute -left-[56px] top-6 w-[2px] h-[calc(100%+3rem)] z-0 ${isUnlocked ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]' : 'bg-white/10'
+                                        }`} />
+                                )}
+
+                                {/* Horizontal Branch Connector */}
+                                <div className={`absolute -left-[56px] top-[34px] w-16 h-[2px] hidden md:block z-0 ${isUnlocked ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]' : 'bg-white/10'}`} />
+
+                                {/* Node / Dot - WITH PULSE-SCALE ANIMATION */}
+                                <div className={`absolute -left-[62px] top-6 w-3 h-3 rounded-full z-10 box-content border-4 border-black ${isUnlocked ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,1)] animate-pulse-scale' : 'bg-gray-800'
                                     }`} />
 
-                                <div className={`p-6 rounded-2xl border transition-all duration-300 ${isUnlocked
-                                    ? 'bg-gradient-to-r from-white/5 to-transparent border-red-500/30 shadow-lg shadow-red-900/10'
-                                    : 'bg-transparent border-white/5 opacity-60'
-                                    }`}>
-                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                {isUnlocked && !isPast && (
+                                    <div className="absolute -left-[62px] top-6 w-3 h-3 rounded-full bg-green-500 animate-ping opacity-50 z-0" />
+                                )}
 
-                                        {/* Info Principal */}
-                                        <div className="flex-grow">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-md ${isUnlocked ? 'bg-red-500/20 text-red-400' : 'bg-white/5 text-gray-500'
-                                                    }`}>
-                                                    {isUnlocked ? 'Disponible' : 'Bloqueado'}
-                                                </span>
-                                                <span className="text-sm text-gray-400 font-medium">{item.dateLabel}</span>
+                                {/* Active Card with Revolution Style Rotating Border */}
+                                <div className={`relative rounded-3xl overflow-hidden transition-all duration-300 group ${isUnlocked
+                                    ? 'p-[3px] shadow-2xl' /* Padding creates the border width */
+                                    : 'p-[1px] bg-transparent border border-white/5 opacity-60'
+                                    }`}>
+
+                                    {/* Rotating Gradient Background (Only for unlocked) */}
+                                    {isUnlocked && (
+                                        <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,#ef4444,#000000,#ffffff,#ef4444)] animate-[spin_4s_linear_infinite]" />
+                                    )}
+
+                                    {/* Main Content Container */}
+                                    <div className={`relative h-full w-full rounded-[21px] overflow-hidden ${isUnlocked ? 'bg-[#0a0a0a]' : 'bg-transparent'} p-6 md:p-8`}>
+                                        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-8 xl:gap-6">
+
+                                            {/* Info Principal */}
+                                            <div className="flex-grow text-center xl:text-left">
+                                                <div className="flex flex-wrap items-center justify-center xl:justify-start gap-2 mb-4">
+                                                    <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${isUnlocked
+                                                        ? 'bg-red-500/5 border-red-500/30 text-red-500 shadow-[0_0_20px_rgba(220,38,38,0.2)]'
+                                                        : 'bg-white/5 border-white/10 text-gray-500'
+                                                        }`}>
+                                                        {isUnlocked ? (
+                                                            <span className="flex items-center gap-2">
+                                                                <span className="relative flex h-2 w-2">
+                                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                                                </span>
+                                                                PREVENTA ACTIVA
+                                                            </span>
+                                                        ) : 'PRÓXIMAMENTE'}
+                                                    </span>
+                                                    <span className="text-sm text-gray-500 font-medium border-l border-white/10 pl-4 tracking-wide">{item.dateLabel}</span>
+                                                </div>
+
+                                                <h3 className="text-3xl md:text-5xl font-black text-white mb-3 tracking-tighter leading-tight">
+                                                    {item.title}
+                                                </h3>
+                                                <p className="text-gray-400 text-base mb-8 max-w-xl font-light leading-relaxed mx-auto xl:mx-0">{item.description}</p>
+
+                                                {/* Precios y Ahorro Futurista */}
+                                                {item.price && (
+                                                    <div className="relative group">
+                                                        <div className="relative flex flex-wrap justify-center xl:justify-start items-center gap-6 bg-white/5 backdrop-blur-md w-fit px-6 py-4 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 mx-auto xl:mx-0">
+
+                                                            {/* Precio Base */}
+                                                            <div>
+                                                                <div className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1">Precio Base</div>
+                                                                <div className="text-base text-gray-500 font-sans line-through decoration-gray-600 decoration-1">{item.basePrice}</div>
+                                                            </div>
+
+                                                            {/* Separator - Vertical Line */}
+                                                            <div className="h-8 w-px bg-white/10"></div>
+
+                                                            {/* Precio Oferta */}
+                                                            <div>
+                                                                <div className="text-[10px] text-red-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
+                                                                    Oferta
+                                                                </div>
+                                                                <div className={`text-2xl md:text-3xl font-bold tracking-tight ${isUnlocked ? 'text-white' : 'text-gray-600'}`}>
+                                                                    {item.price}
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Ahorro Badge */}
+                                                            {isUnlocked && (
+                                                                <div className="ml-4 px-4 py-2 bg-green-900/10 rounded-lg border border-green-500/20 text-green-500 flex flex-col items-center">
+                                                                    <span className="text-[10px] uppercase font-bold tracking-widest mb-0.5">Ahorras</span>
+                                                                    <span className="font-sans font-bold text-base tracking-tight">{item.savings}</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
 
-                                            <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                                            <p className="text-gray-400 text-sm mb-4">{item.description}</p>
-
-                                            {/* Precios y Ahorro */}
-                                            {item.price && (
-                                                <div className="flex items-center gap-4 bg-black/30 w-fit px-4 py-2 rounded-lg border border-white/5">
-                                                    <div>
-                                                        <div className="text-[10px] text-gray-500 uppercase">Precio Base</div>
-                                                        <div className="text-sm text-gray-400 line-through decoration-red-500">{item.basePrice}</div>
-                                                    </div>
-                                                    <div className="h-8 w-px bg-white/10"></div>
-                                                    <div>
-                                                        <div className="text-[10px] text-gray-500 uppercase">Oferta</div>
-                                                        <div className={`text-lg font-black ${isUnlocked ? 'text-white' : 'text-gray-500'}`}>{item.price}</div>
-                                                    </div>
-                                                    {isUnlocked && (
-                                                        <div className="hidden sm:block ml-2 px-2 py-1 bg-green-500/10 rounded text-xs text-green-400 font-bold border border-green-500/20">
-                                                            Ahorras {item.savings}
+                                            {/* Action / Countdown */}
+                                            <div className="flex flex-col items-center justify-center min-w-[200px] text-center mt-0 xl:mt-0 w-full xl:w-auto">
+                                                {!isPast && (
+                                                    <div className="mb-4">
+                                                        <div className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">
+                                                            {isUnlocked ? "TIEMPO RESTANTE" : "SE DESBLOQUEA EN"}
                                                         </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Action / Countdown */}
-                                        <div className="md:text-right min-w-[200px]">
-                                            {!isPast && (
-                                                <div className="mb-3">
-                                                    <div className="text-xs text-gray-500 uppercase mb-1">
-                                                        {isUnlocked ? "Inicia en:" : "Se desbloquea en:"}
+                                                        <div className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-lg border border-white/10 backdrop-blur-sm">
+                                                            <div className="text-center min-w-[32px]">
+                                                                <span className="block text-lg font-bold text-white leading-none">{countdown.days}</span>
+                                                                <span className="text-[8px] text-gray-500 uppercase font-semibold">Días</span>
+                                                            </div>
+                                                            <span className="text-gray-600 font-bold mb-2">:</span>
+                                                            <div className="text-center min-w-[32px]">
+                                                                <span className="block text-lg font-bold text-white leading-none">{String(countdown.hours).padStart(2, '0')}</span>
+                                                                <span className="text-[8px] text-gray-500 uppercase font-semibold">Hrs</span>
+                                                            </div>
+                                                            <span className="text-gray-600 font-bold mb-2">:</span>
+                                                            <div className="text-center min-w-[32px]">
+                                                                <span className="block text-lg font-bold text-white leading-none">{String(countdown.minutes).padStart(2, '0')}</span>
+                                                                <span className="text-[8px] text-gray-500 uppercase font-semibold">Min</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className="font-mono text-xl text-white font-bold tracking-widest">
-                                                        {countdown.days}d {String(countdown.hours).padStart(2, '0')}h {String(countdown.minutes).padStart(2, '0')}m
+                                                )}
+
+                                                {isUnlocked && !isPast && (
+                                                    <a
+                                                        href={`https://wa.me/573008871908?text=${encodeURIComponent(`Hola, quiero aprovechar la ${item.title} ($${item.price}) del PreICFES antes de que suba de precio.`)}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="w-full md:w-auto px-6 py-3 bg-white text-black font-black uppercase tracking-wide rounded-xl hover:bg-gray-200 transition-all transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2 group"
+                                                    >
+                                                        <ShoppingCart size={18} className="group-hover:-rotate-12 transition-transform" />
+                                                        Comprar Ahora
+                                                    </a>
+                                                )}
+
+                                                {!isUnlocked && (
+                                                    <div className="flex items-center gap-2 text-gray-500 text-sm justify-center">
+                                                        <Lock size={14} />
+                                                        <span>Espera al día 1</span>
                                                     </div>
-                                                </div>
-                                            )}
-
-                                            {isUnlocked && !isPast && (
-                                                <button className="w-full md:w-auto px-6 py-2 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                                                    <ShoppingCart size={16} />
-                                                    Comprar Plan
-                                                </button>
-                                            )}
-
-                                            {!isUnlocked && (
-                                                <div className="flex items-center gap-2 text-gray-500 text-sm justify-end">
-                                                    <Lock size={14} />
-                                                    <span>Espera al día 1</span>
-                                                </div>
-                                            )}
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

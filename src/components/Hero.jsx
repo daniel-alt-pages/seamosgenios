@@ -69,7 +69,7 @@ const Hero = () => {
     const examCalendarA = new Date('2026-07-26T07:00:00'); // 26 de julio 2026, 7:00 AM
 
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-32 overflow-hidden bg-black">
+        <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-32 overflow-hidden">
             {/* Advanced Background Effects */}
             <div className="absolute inset-0 gradient-mesh z-0" />
             <div className="absolute inset-0 bg-grid-pattern-fade z-0" />

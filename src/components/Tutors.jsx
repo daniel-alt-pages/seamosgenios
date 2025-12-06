@@ -139,7 +139,7 @@ const Tutors = () => {
     ];
 
     return (
-        <section className="py-24 bg-black relative" id="tutores">
+        <section className="py-24 relative" id="tutores">
             <div className="absolute inset-0 bg-grid-pattern opacity-10" />
 
             <div className="container mx-auto px-4 relative z-10">

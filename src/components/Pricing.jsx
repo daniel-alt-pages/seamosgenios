@@ -84,7 +84,7 @@ const Pricing = () => {
     };
 
     return (
-        <section className="py-32 relative overflow-hidden bg-black" id="precios">
+        <section className="py-32 relative overflow-hidden" id="precios">
             <div className="absolute inset-0 bg-grid-pattern opacity-30" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-red-600/10 via-orange-600/10 to-red-600/10 rounded-full blur-[150px]" />
 
@@ -146,7 +146,7 @@ const Pricing = () => {
                                 <div className={`relative h-full rounded-3xl overflow-hidden glass-card transition-all duration-500 ${plan.popular
                                     ? 'neon-border hover-lift'
                                     : 'border border-white/5 hover:border-white/10 hover-lift'
-                                    } bg-gradient-to-br ${plan.popular ? 'from-red-900/50 to-orange-900/50' : 'from-gray-800/50 to-gray-900/50'} p-8`}>
+                                    } bg-gradient-to-br ${plan.popular ? 'from-red-900/50 to-orange-900/50' : 'from-gray-800/50 to-gray-900/50'} p-6 md:p-8`}>
 
                                     {/* Not Available Overlay */}
                                     {!plan.available && (
@@ -183,7 +183,7 @@ const Pricing = () => {
                                     )}
 
                                     {/* Icon */}
-                                    <div className={`w-14 h-14 rounded-2xl glass-strong flex items-center justify-center mb-6 ${plan.popular ? 'neon-box' : ''
+                                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl glass-strong flex items-center justify-center mb-4 md:mb-6 ${plan.popular ? 'neon-box' : ''
                                         }`}>
                                         <IconComponent className={`w-7 h-7 ${plan.popular ? 'text-red-400' : 'text-gray-400'
                                             }`} />
@@ -219,8 +219,8 @@ const Pricing = () => {
                                     )}
 
                                     {/* Pricing */}
-                                    <div className="flex items-end gap-3 mb-8">
-                                        <span className={`text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'
+                                    <div className="flex items-end gap-3 mb-6 md:mb-8">
+                                        <span className={`text-4xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'
                                             }`}>
                                             {plan.price}
                                         </span>

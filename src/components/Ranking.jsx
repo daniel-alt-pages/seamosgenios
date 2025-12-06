@@ -87,7 +87,7 @@ const Ranking = () => {
     const leaderboard = rankingData.slice(3, 7);
 
     return (
-        <section className="py-24 relative overflow-hidden bg-black" id="ranking">
+        <section className="py-24 relative overflow-hidden" id="ranking">
             {/* Ambient Background */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-900/10 via-black to-black" />
 
@@ -128,7 +128,7 @@ const Ranking = () => {
                         ) : (
                             <>
                                 {/* PODIUM */}
-                                <div className="grid grid-cols-3 gap-2 md:gap-4 items-end h-[350px] md:h-[400px] mb-12">
+                                <div className="grid grid-cols-3 gap-2 md:gap-4 items-end h-[350px] md:h-[400px] mb-24 relative z-0">
                                     {/* 2nd Place (Left) */}
                                     <motion.div
                                         initial={{ opacity: 0, height: 0 }}
@@ -137,15 +137,22 @@ const Ranking = () => {
                                         transition={{ delay: 0.2 }}
                                         className="relative flex flex-col justify-end"
                                     >
-                                        <div className="text-center mb-2">
-                                            <div className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-full border-2 border-gray-400 bg-gray-800 flex items-center justify-center mb-2 shadow-lg shadow-gray-500/20">
-                                                <span className="text-xl md:text-2xl">🥈</span>
+                                        <div className="text-center mb-4">
+                                            <div className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full border-2 border-slate-400 bg-slate-900/50 flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(148,163,184,0.15)] relative backdrop-blur-sm">
+                                                <span className="text-2xl font-black text-slate-300">2</span>
+                                                <div className="absolute -top-1 -right-1">
+                                                    <Trophy size={16} className="text-slate-400 fill-slate-400" />
+                                                </div>
                                             </div>
-                                            <div className="font-bold text-gray-300 truncate text-xs md:text-sm px-1">{podiumOrder[0]?.name}</div>
-                                            <div className="text-xs text-gray-500 font-mono font-bold">{podiumOrder[0]?.total} Ptos</div>
+                                            <div className="font-black text-white text-xs md:text-sm px-1 uppercase tracking-tight mb-2">{podiumOrder[0]?.name}</div>
+                                            <div className="inline-block px-3 py-1 rounded-md bg-slate-800/80 border border-slate-600/50 backdrop-blur-md">
+                                                <span className="text-lg md:text-xl font-black text-slate-200 tracking-wide">{podiumOrder[0]?.total} <span className="text-xs md:text-sm text-slate-400 font-bold uppercase">Ptos</span></span>
+                                            </div>
                                         </div>
-                                        <div className="h-32 md:h-48 w-full bg-gradient-to-t from-gray-900 to-gray-800 rounded-t-xl border-t border-x border-gray-700/50 flex items-end justify-center pb-4 group hover:from-gray-800 hover:to-gray-700 transition-colors">
-                                            <span className="text-4xl font-black text-white/30 group-hover:text-white/40 transition-colors">2</span>
+                                        <div className="h-40 md:h-52 w-full bg-slate-900/40 rounded-t-lg border border-slate-700/30 flex items-end justify-center pb-6 relative overflow-hidden group">
+                                            <div className="absolute inset-0 bg-gradient-to-b from-slate-800/10 to-slate-900/90" />
+                                            {/* Removed large background number to prevent overlap/clutter */}
+                                            <div className="h-full w-full absolute top-0 left-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                                         </div>
                                     </motion.div>
 
@@ -156,19 +163,26 @@ const Ranking = () => {
                                         viewport={{ once: true }}
                                         className="relative flex flex-col justify-end z-10"
                                     >
-                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 animate-bounce-slow">
-                                            <Crown size={32} className="text-yellow-400 fill-yellow-400 drop-shadow-lg" />
+                                        <div className="absolute -top-14 left-1/2 -translate-x-1/2 animate-bounce-slow">
+                                            <Crown size={40} className="text-yellow-400 fill-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
                                         </div>
-                                        <div className="text-center mb-2">
-                                            <div className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full border-4 border-yellow-400 bg-gray-800 flex items-center justify-center mb-2 shadow-xl shadow-yellow-500/30">
-                                                <span className="text-2xl md:text-3xl">🥇</span>
+                                        <div className="text-center mb-4">
+                                            <div className="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full border-2 border-yellow-400 bg-yellow-900/20 flex items-center justify-center mb-3 shadow-[0_0_30px_rgba(234,179,8,0.2)] relative backdrop-blur-sm">
+                                                <span className="text-3xl font-black text-yellow-400">1</span>
+                                                <div className="absolute -top-1 -right-1 bg-yellow-400 rounded-full p-1">
+                                                    <Trophy size={14} className="text-yellow-900 fill-yellow-900" />
+                                                </div>
                                             </div>
-                                            <div className="font-bold text-yellow-100 truncate text-sm md:text-base px-1">{podiumOrder[1]?.name}</div>
-                                            <div className="text-xs md:text-sm text-yellow-400 font-bold font-mono">{podiumOrder[1]?.total} Ptos</div>
+                                            <div className="font-black text-white text-sm md:text-base px-1 uppercase tracking-tight mb-2">{podiumOrder[1]?.name}</div>
+                                            <div className="inline-block px-4 py-1.5 rounded-lg bg-yellow-900/40 border border-yellow-500/50 backdrop-blur-md shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                                                <span className="text-2xl md:text-3xl font-black text-yellow-400 tracking-wide">{podiumOrder[1]?.total} <span className="text-sm md:text-base text-yellow-600 font-bold uppercase">Ptos</span></span>
+                                            </div>
                                         </div>
-                                        <div className="h-44 md:h-64 w-full bg-gradient-to-t from-yellow-900/40 via-yellow-900/20 to-yellow-600/20 rounded-t-xl border-t border-x border-yellow-500/50 flex items-end justify-center pb-4 relative overflow-hidden group">
-                                            <div className="absolute inset-0 bg-yellow-400/5 animate-pulse" />
-                                            <span className="text-6xl font-black text-yellow-500/40 group-hover:text-yellow-500/50 transition-colors">1</span>
+                                        <div className="h-52 md:h-72 w-full bg-yellow-900/20 rounded-t-lg border border-yellow-600/30 flex items-end justify-center pb-6 relative overflow-hidden group shadow-[0_0_50px_rgba(234,179,8,0.1)]">
+                                            <div className="absolute inset-0 bg-gradient-to-b from-yellow-900/5 to-yellow-900/80" />
+                                            <div className="h-full w-full absolute top-0 left-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                            {/* Shining effect */}
+                                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000"></div>
                                         </div>
                                     </motion.div>
 
@@ -180,15 +194,21 @@ const Ranking = () => {
                                         transition={{ delay: 0.3 }}
                                         className="relative flex flex-col justify-end"
                                     >
-                                        <div className="text-center mb-2">
-                                            <div className="w-12 h-12 md:w-16 md:h-16 mx-auto rounded-full border-2 border-orange-700 bg-gray-800 flex items-center justify-center mb-2 shadow-lg shadow-orange-900/20">
-                                                <span className="text-xl md:text-2xl">🥉</span>
+                                        <div className="text-center mb-4">
+                                            <div className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full border-2 border-orange-700 bg-orange-900/20 flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(194,65,12,0.15)] relative backdrop-blur-sm">
+                                                <span className="text-2xl font-black text-orange-500">3</span>
+                                                <div className="absolute -top-1 -right-1">
+                                                    <Trophy size={16} className="text-orange-600 fill-orange-600" />
+                                                </div>
                                             </div>
-                                            <div className="font-bold text-gray-300 truncate text-xs md:text-sm px-1">{podiumOrder[2]?.name}</div>
-                                            <div className="text-xs text-orange-400 font-mono font-bold">{podiumOrder[2]?.total} Ptos</div>
+                                            <div className="font-black text-white text-xs md:text-sm px-1 uppercase tracking-tight mb-2">{podiumOrder[2]?.name}</div>
+                                            <div className="inline-block px-3 py-1 rounded-md bg-orange-900/40 border border-orange-700/50 backdrop-blur-md">
+                                                <span className="text-lg md:text-xl font-black text-orange-400 tracking-wide">{podiumOrder[2]?.total} <span className="text-xs md:text-sm text-orange-600 font-bold uppercase">Ptos</span></span>
+                                            </div>
                                         </div>
-                                        <div className="h-24 md:h-32 w-full bg-gradient-to-t from-orange-900/40 to-orange-900/10 rounded-t-xl border-t border-x border-orange-800/50 flex items-end justify-center pb-4 group hover:from-orange-900/30 transition-colors">
-                                            <span className="text-4xl font-black text-white/30 group-hover:text-white/40 transition-colors">3</span>
+                                        <div className="h-32 md:h-40 w-full bg-orange-900/20 rounded-t-lg border border-orange-800/30 flex items-end justify-center pb-6 relative overflow-hidden group">
+                                            <div className="absolute inset-0 bg-gradient-to-b from-orange-900/5 to-orange-950/90" />
+                                            <div className="h-full w-full absolute top-0 left-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                                         </div>
                                     </motion.div>
                                 </div>
@@ -208,17 +228,24 @@ const Ranking = () => {
                                             initial="hidden"
                                             whileInView="visible"
                                             custom={i}
-                                            className="flex items-center gap-4 p-3 rounded-lg glass-card border border-white/5 hover:border-white/10 transition-colors"
+                                            className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/[0.07] transition-all group"
                                         >
-                                            <span className="font-mono text-gray-500 w-6 text-center font-bold">#{i + 4}</span>
-                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-xs shadow-inner">
+                                            <span className="font-display text-gray-500 w-8 text-center font-bold text-lg group-hover:text-white transition-colors">#{i + 4}</span>
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center text-lg shadow-lg border border-white/10 group-hover:border-white/20 transition-colors">
                                                 🎓
                                             </div>
                                             <div className="flex-grow min-w-0">
-                                                <div className="text-sm font-bold text-gray-200 truncate">{student.name}</div>
-                                                <div className="text-[10px] text-gray-500 truncate">{student.city || 'Colombia'}</div>
+                                                <div className="text-sm md:text-base font-bold text-gray-200 truncate group-hover:text-white transition-colors">{student.name}</div>
+                                                <div className="text-[11px] text-gray-500 truncate flex items-center gap-1">
+                                                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500/50"></span>
+                                                    {student.city || 'Estudiante PreICFES'}
+                                                </div>
                                             </div>
-                                            <div className="font-mono font-bold text-white bg-white/5 px-2 py-1 rounded-md">{student.total}</div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="font-display font-black text-white bg-black/40 border border-white/5 px-3 py-1.5 rounded-lg shadow-inner text-sm md:text-base">
+                                                    {student.total} <span className="text-[8px] uppercase text-gray-500 font-bold ml-1">Ptos</span>
+                                                </div>
+                                            </div>
                                         </motion.div>
                                     ))}
                                 </div>

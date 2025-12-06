@@ -34,7 +34,7 @@ const About = () => {
     };
 
     return (
-        <section className="py-24 bg-black relative overflow-hidden" id="nosotros">
+        <section className="py-24 relative overflow-hidden" id="nosotros">
             {/* Shapes */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px]" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-600/5 rounded-full blur-[120px]" />
@@ -59,7 +59,7 @@ const About = () => {
                             <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 mb-4 group-hover:scale-110 transition-transform">
                                 <GraduationCap size={24} />
                             </div>
-                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Acceso a los Mejores</h4>
+                            <h4 className="text-lg font-bold mb-2 text-white">Acceso a los Mejores</h4>
                             <p className="text-sm text-gray-400 leading-relaxed">
                                 Mentores de la U. Nacional, ICESI, UIS y U. de los Andes.
                             </p>
@@ -70,7 +70,7 @@ const About = () => {
                             <div className="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 mb-4 group-hover:scale-110 transition-transform">
                                 <Home size={24} />
                             </div>
-                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Cero Desplazamientos</h4>
+                            <h4 className="text-lg font-bold mb-2 text-white">Cero Desplazamientos</h4>
                             <p className="text-sm text-gray-400 leading-relaxed">
                                 Más tiempo para estudiar desde la comodidad de sus casas.
                             </p>
@@ -80,7 +80,7 @@ const About = () => {
                             <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 mb-4 group-hover:scale-110 transition-transform">
                                 <Wifi size={24} />
                             </div>
-                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Flexibilidad Total</h4>
+                            <h4 className="text-lg font-bold mb-2 text-white">Flexibilidad Total</h4>
                             <p className="text-sm text-gray-400 leading-relaxed">
                                 Clases en vivo grabadas y disponibles 24/7 en nuestra nube privada.
                             </p>
@@ -91,7 +91,7 @@ const About = () => {
                             <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 mb-4 group-hover:scale-110 transition-transform">
                                 <Zap size={24} />
                             </div>
-                            <h4 className="text-lg font-bold mb-2 text-fire-animated">Disciplina Digital</h4>
+                            <h4 className="text-lg font-bold mb-2 text-white">Disciplina Digital</h4>
                             <p className="text-sm text-gray-400 leading-relaxed">
                                 Aprendizaje de autogestión y herramientas que usarán en la universidad.
                             </p>
@@ -121,7 +121,7 @@ const About = () => {
                                     <Rocket size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold mb-2 text-fire-animated">Misión</h3>
+                                    <h3 className="text-xl font-bold mb-2 text-white">Misión</h3>
                                     <p className="text-gray-400 leading-relaxed">
                                         Transformar vidas brindando herramientas reales para abrir las puertas del futuro académico de cualquier estudiante.
                                     </p>
@@ -133,7 +133,7 @@ const About = () => {
                                     <Target size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold mb-2 text-fire-animated">Visión</h3>
+                                    <h3 className="text-xl font-bold mb-2 text-white">Visión</h3>
                                     <p className="text-gray-400 leading-relaxed">
                                         Democratizar la educación en Colombia y ser el programa virtual líder, comprometido con la calidad, el impacto social y la oportunidad para todos.
                                     </p>
