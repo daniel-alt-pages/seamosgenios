@@ -154,7 +154,7 @@ const Tutors = () => {
                         <span className="uppercase tracking-wider">Equipo Académico</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
-                        Mentores de <span className="text-gradient">Élite</span>
+                        Mentores de <span className="text-gradient">Excelencia</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg">
                         El equipo detrás de los resultados. Estudiantes de las mejores universidades del país y puntajes ICFES excepcionales.

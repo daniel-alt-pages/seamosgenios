@@ -83,7 +83,7 @@ const About = () => {
                                     <Users size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white mb-2">Comunidad Élite</h3>
+                                    <h3 className="text-xl font-bold text-white mb-2">Comunidad de Genios</h3>
                                     <p className="text-gray-400 leading-relaxed">
                                         No estudias solo. Te unes a una comunidad vibrante de soñadores y hacedores que se impulsan mutuamente hacia el éxito.
                                     </p>
@@ -154,8 +154,8 @@ const About = () => {
                                             key={idx}
                                             onClick={() => setCurrentSlide(idx)}
                                             className={`w-2 h-2 rounded-full transition-all duration-300 ${currentSlide === idx
-                                                    ? 'bg-red-500 w-6 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
-                                                    : 'bg-white/30 hover:bg-white/50'
+                                                ? 'bg-red-500 w-6 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
+                                                : 'bg-white/30 hover:bg-white/50'
                                                 }`}
                                         />
                                     ))}
