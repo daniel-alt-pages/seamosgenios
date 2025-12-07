@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,6 +11,55 @@ import About from './components/About';
 import RotateDevicePrompt from './components/RotateDevicePrompt';
 
 function App() {
+  // Scroll Spy Logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['precios', 'cronograma', 'ranking', 'tutores', 'nosotros'];
+      let currentSection = '';
+
+      // Check which section is most visible in the viewport
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // Logic: If the top of the section is within the top half of the viewport
+          // OR if the section covers a significant portion of the viewport
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            currentSection = sectionId;
+            break;
+          }
+        }
+      }
+
+      // Update URL hash without jumping
+      if (currentSection && window.location.hash !== `#${currentSection}`) {
+        // Using replaceState prevents filling up the browser history
+        window.history.replaceState(null, null, `#${currentSection}`);
+      } else if (!currentSection && window.scrollY < 100) {
+        // Remove hash if at very top (Hero)
+        if (window.location.hash) {
+          window.history.replaceState(null, null, ' ');
+        }
+      }
+    };
+
+    // Throttle scroll event slightly for performance
+    let timeoutId = null;
+    const throttledScroll = () => {
+      if (!timeoutId) {
+        timeoutId = setTimeout(() => {
+          handleScroll();
+          timeoutId = null;
+        }, 100);
+      }
+    };
+
+    window.addEventListener('scroll', throttledScroll);
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
   return (
     <div className="min-h-screen bg-background text-white selection:bg-red-500/30">
       <RotateDevicePrompt />

@@ -110,7 +110,7 @@ const Ranking = () => {
                         <span className="uppercase tracking-wider">Excelencia Académica</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-6xl font-black mb-6 text-white">
+                    <h2 className="text-4xl md:text-6xl font-black mb-6 text-white flex items-center justify-center gap-4 flex-wrap">
                         RESULTADOS DESTACADOS <span className="text-fire-animated block md:inline">CALENDARIO A 2025</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
