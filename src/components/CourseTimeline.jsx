@@ -119,8 +119,8 @@ const CourseTimeline = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-5xl font-black mb-6 text-white leading-tight flex items-center justify-center gap-4">
-                        Evolución de Precios <br />
+                    <h2 className="text-2xl md:text-5xl font-black mb-6 text-white leading-tight flex flex-wrap items-center justify-center gap-2 md:gap-4">
+                        Evolución de Precios <br className="hidden md:block" />
                         <span className="text-fire-animated">Calendarios A y B</span>
                     </h2>
                     <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -129,7 +129,7 @@ const CourseTimeline = () => {
                     </p>
                 </motion.div>
 
-                <div className="relative ml-8 md:mx-auto max-w-4xl pl-12 md:pl-0">
+                <div className="relative ml-0 md:mx-auto max-w-4xl pl-12 md:pl-0">
                     {timelineData.map((item, index) => {
                         const isUnlocked = currentDate >= item.unlockDate;
                         const isPast = currentDate > item.targetDate;
@@ -197,10 +197,10 @@ const CourseTimeline = () => {
                                                     <span className="text-sm text-gray-500 font-medium border-l border-white/10 pl-4 tracking-wide">{item.dateLabel}</span>
                                                 </div>
 
-                                                <h3 className="text-3xl md:text-5xl font-black text-white mb-3 tracking-tighter leading-tight">
+                                                <h3 className="text-2xl md:text-5xl font-black text-white mb-3 tracking-tighter leading-tight">
                                                     {item.title}
                                                 </h3>
-                                                <p className="text-gray-400 text-base mb-8 max-w-xl font-light leading-relaxed mx-auto xl:mx-0">{item.description}</p>
+                                                <p className="text-gray-400 text-sm md:text-base mb-8 max-w-xl font-light leading-relaxed mx-auto xl:mx-0">{item.description}</p>
 
                                                 {/* Precios y Ahorro Futurista */}
                                                 {item.price && (
@@ -224,7 +224,7 @@ const CourseTimeline = () => {
                                                                         <div className="text-[10px] text-red-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
                                                                             Oferta
                                                                         </div>
-                                                                        <div className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+                                                                        <div className="text-xl md:text-3xl font-bold tracking-tight text-white">
                                                                             {item.price}
                                                                         </div>
                                                                     </>
@@ -234,7 +234,7 @@ const CourseTimeline = () => {
                                                                             Bloqueado
                                                                         </div>
                                                                         <div className="relative group cursor-help">
-                                                                            <div className="text-2xl md:text-3xl font-bold tracking-tight text-white/30 blur-[6px] group-hover:blur-[3px] transition-all duration-500 select-none">
+                                                                            <div className="text-xl md:text-3xl font-bold tracking-tight text-white/30 blur-[6px] group-hover:blur-[3px] transition-all duration-500 select-none">
                                                                                 {item.price}
                                                                             </div>
                                                                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">

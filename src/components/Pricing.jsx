@@ -101,7 +101,7 @@ const Pricing = () => {
                         <span className="uppercase tracking-wider">Inversión en tu Futuro</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-6xl font-black text-center mb-6 text-white flex items-center justify-center gap-4">
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-center mb-6 text-white flex flex-wrap items-center justify-center gap-2 md:gap-4">
                         Elige tu <span className="text-fire-animated">Camino</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
@@ -109,7 +109,7 @@ const Pricing = () => {
                     </p>
                 </motion.div>
 
-                <div className={`grid gap-8 max-w-7xl mx-auto ${plans.length === 1 ? 'md:grid-cols-1 max-w-2xl' : plans.length === 2 ? 'md:grid-cols-2 max-w-5xl' : 'md:grid-cols-3'}`}>
+                <div className={`grid gap-5 md:gap-8 max-w-7xl mx-auto ${plans.length === 1 ? 'md:grid-cols-1 max-w-2xl' : plans.length === 2 ? 'md:grid-cols-2 max-w-5xl' : 'md:grid-cols-3'}`}>
                     {plans.map((plan, index) => {
                         const IconComponent = getIconForPlan(index);
                         const isLoading = loadingPlan === index;
@@ -146,7 +146,7 @@ const Pricing = () => {
                                 <div className={`relative h-full rounded-3xl overflow-hidden glass-card transition-all duration-500 ${plan.popular
                                     ? 'neon-border hover-lift'
                                     : 'border border-white/5 hover:border-white/10 hover-lift'
-                                    } bg-gradient-to-br ${plan.popular ? 'from-red-900/50 to-orange-900/50' : 'from-gray-800/50 to-gray-900/50'} p-6 md:p-8`}>
+                                    } bg-gradient-to-br ${plan.popular ? 'from-red-900/50 to-orange-900/50' : 'from-gray-800/50 to-gray-900/50'} p-5 md:p-8`}>
 
                                     {/* Not Available Overlay */}
                                     {!plan.available && (
@@ -190,7 +190,7 @@ const Pricing = () => {
                                     </div>
 
                                     {/* Plan Name */}
-                                    <h3 className="text-2xl md:text-3xl font-black mb-2 text-white">{plan.name}</h3>
+                                    <h3 className="text-xl md:text-3xl font-black mb-2 text-white">{plan.name}</h3>
 
                                     {/* Start Date Highlight */}
                                     {plan.startDate && (
@@ -220,7 +220,7 @@ const Pricing = () => {
 
                                     {/* Pricing */}
                                     <div className="flex flex-wrap items-end gap-x-3 gap-y-1 mb-6 md:mb-8">
-                                        <span className={`text-3xl sm:text-4xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'}`}>
+                                        <span className={`text-3xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'}`}>
                                             {plan.price}
                                         </span>
                                         {plan.originalPrice && (

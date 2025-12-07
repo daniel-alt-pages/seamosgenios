@@ -153,7 +153,7 @@ const Tutors = () => {
                         <User size={16} />
                         <span className="uppercase tracking-wider">Equipo Académico</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-white flex items-center justify-center gap-4">
+                    <h2 className="text-3xl md:text-5xl font-black mb-6 text-white flex flex-wrap items-center justify-center gap-2 md:gap-4">
                         Mentores de <span className="text-fire-animated">Excelencia</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg">
@@ -161,7 +161,7 @@ const Tutors = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                     {tutors.map((tutor, index) => {
                         const Icon = tutor.icon;
                         return (
@@ -175,7 +175,7 @@ const Tutors = () => {
                             >
                                 <div className={`absolute inset-0 bg-gradient-to-br ${tutor.special ? 'from-amber-500/20 to-transparent' : 'from-white/5 to-transparent'} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-                                <div className={`relative h-full p-6 rounded-3xl glass-card border ${tutor.special ? 'border-amber-500/30' : 'border-white/5'} group-hover:border-white/20 transition-all duration-300 hover:-translate-y-2 flex flex-col`}>
+                                <div className={`relative h-full p-4 md:p-6 rounded-3xl glass-card border ${tutor.special ? 'border-amber-500/30' : 'border-white/5'} group-hover:border-white/20 transition-all duration-300 hover:-translate-y-2 flex flex-col`}>
 
                                     {/* Header: Avatar & Badge */}
                                     <div className="flex justify-between items-start mb-6">
