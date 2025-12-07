@@ -111,11 +111,12 @@ const Ranking = () => {
                     </div>
 
                     <h2 className="text-4xl md:text-6xl font-black mb-6 text-white">
-                        RESULTADOS <span className="text-fire-animated">DESTACADOS</span>
+                        RESULTADOS DESTACADOS <span className="text-fire-animated block md:inline">CALENDARIO A 2025</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
                         Estos son los puntajes reales de nuestros estudiantes en la prueba oficial de agosto 2025.
                         Una muestra del potencial que desbloqueamos juntos.
+
                     </p>
                 </motion.div>
 
@@ -146,7 +147,7 @@ const Ranking = () => {
                                             </div>
                                             <div className="font-black text-white text-xs md:text-sm px-1 uppercase tracking-tight mb-2">{podiumOrder[0]?.name}</div>
                                             <div className="inline-block px-3 py-1 rounded-md bg-slate-800/80 border border-slate-600/50 backdrop-blur-md">
-                                                <span className="text-lg md:text-xl font-black text-slate-200 tracking-wide">{podiumOrder[0]?.total} <span className="text-xs md:text-sm text-slate-400 font-bold uppercase">Ptos</span></span>
+                                                <span className="text-lg md:text-xl font-black text-slate-200 tracking-wide">{podiumOrder[0]?.total} <span className="text-xs md:text-sm text-slate-400 font-bold uppercase">/500</span></span>
                                             </div>
                                         </div>
                                         <div className="h-40 md:h-52 w-full bg-slate-900/40 rounded-t-lg border border-slate-700/30 flex items-end justify-center pb-6 relative overflow-hidden group">
@@ -175,7 +176,7 @@ const Ranking = () => {
                                             </div>
                                             <div className="font-black text-white text-sm md:text-base px-1 uppercase tracking-tight mb-2">{podiumOrder[1]?.name}</div>
                                             <div className="inline-block px-4 py-1.5 rounded-lg bg-yellow-900/40 border border-yellow-500/50 backdrop-blur-md shadow-[0_0_15px_rgba(234,179,8,0.2)]">
-                                                <span className="text-2xl md:text-3xl font-black text-yellow-400 tracking-wide">{podiumOrder[1]?.total} <span className="text-sm md:text-base text-yellow-600 font-bold uppercase">Ptos</span></span>
+                                                <span className="text-2xl md:text-3xl font-black text-yellow-400 tracking-wide">{podiumOrder[1]?.total} <span className="text-sm md:text-base text-yellow-600 font-bold uppercase">/500</span></span>
                                             </div>
                                         </div>
                                         <div className="h-52 md:h-72 w-full bg-yellow-900/20 rounded-t-lg border border-yellow-600/30 flex items-end justify-center pb-6 relative overflow-hidden group shadow-[0_0_50px_rgba(234,179,8,0.1)]">
@@ -203,7 +204,7 @@ const Ranking = () => {
                                             </div>
                                             <div className="font-black text-white text-xs md:text-sm px-1 uppercase tracking-tight mb-2">{podiumOrder[2]?.name}</div>
                                             <div className="inline-block px-3 py-1 rounded-md bg-orange-900/40 border border-orange-700/50 backdrop-blur-md">
-                                                <span className="text-lg md:text-xl font-black text-orange-400 tracking-wide">{podiumOrder[2]?.total} <span className="text-xs md:text-sm text-orange-600 font-bold uppercase">Ptos</span></span>
+                                                <span className="text-lg md:text-xl font-black text-orange-400 tracking-wide">{podiumOrder[2]?.total} <span className="text-xs md:text-sm text-orange-600 font-bold uppercase">/500</span></span>
                                             </div>
                                         </div>
                                         <div className="h-32 md:h-40 w-full bg-orange-900/20 rounded-t-lg border border-orange-800/30 flex items-end justify-center pb-6 relative overflow-hidden group">
@@ -243,7 +244,7 @@ const Ranking = () => {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="font-display font-black text-white bg-black/40 border border-white/5 px-3 py-1.5 rounded-lg shadow-inner text-sm md:text-base">
-                                                    {student.total} <span className="text-[8px] uppercase text-gray-500 font-bold ml-1">Ptos</span>
+                                                    {student.total} <span className="text-[8px] uppercase text-gray-500 font-bold ml-1">/500</span>
                                                 </div>
                                             </div>
                                         </motion.div>
