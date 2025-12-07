@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sparkles } from 'lucide-react';
 
@@ -189,23 +190,23 @@ const Navbar = () => {
                 )}
             </AnimatePresence>
 
-            {/* Modal de Muy Pronto */}
-            <AnimatePresence>
-                {showModal && (
-                    <>
+            {/* Modal de Muy Pronto - Portal fuera del Nav */}
+            {createPortal(
+                <AnimatePresence>
+                    {showModal && (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setShowModal(false)}
-                            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000] flex items-center justify-center p-4 cursor-pointer"
+                            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 cursor-pointer"
                         >
                             <motion.div
                                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
                                 animate={{ scale: 1, opacity: 1, y: 0 }}
                                 exit={{ scale: 0.9, opacity: 0, y: 20 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-[#121212] border border-white/10 rounded-3xl p-8 max-w-md w-full text-center relative overflow-hidden"
+                                className="bg-[#121212] border border-white/10 rounded-3xl p-8 max-w-md w-full text-center relative overflow-hidden shadow-2xl"
                             >
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-gradient-x" />
 
@@ -228,9 +229,10 @@ const Navbar = () => {
                                 </button>
                             </motion.div>
                         </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </nav>
     );
 };

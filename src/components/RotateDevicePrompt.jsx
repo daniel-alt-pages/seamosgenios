@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Smartphone } from 'lucide-react';
+import { Smartphone, ArrowRight } from 'lucide-react';
 
 const RotateDevicePrompt = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [dismissed, setDismissed] = useState(false);
 
     useEffect(() => {
         const checkOrientation = () => {
+            if (dismissed) {
+                setIsVisible(false);
+                return;
+            }
+
             // Mostrar solo si es portrait y el ancho es menor a 1024px (tablets/móviles para abajo)
             // y la altura es mayor que el ancho.
             const isPortrait = window.innerHeight > window.innerWidth;
@@ -20,7 +26,7 @@ const RotateDevicePrompt = () => {
         window.addEventListener('resize', checkOrientation);
 
         return () => window.removeEventListener('resize', checkOrientation);
-    }, []);
+    }, [dismissed]);
 
     return (
         <AnimatePresence>
@@ -84,9 +90,23 @@ const RotateDevicePrompt = () => {
                         Nuestra plataforma de alto rendimiento está diseñada para verse mejor con tu dispositivo girado.
                     </p>
 
-                    <div className="mt-12 flex items-center gap-2 text-sm text-gray-500 font-medium uppercase tracking-widest animate-pulse">
-                        <Smartphone size={16} className="rotate-90" />
-                        Gira tu dispositivo
+                    <div className="mt-8 flex flex-col items-center gap-4">
+                        <div className="flex items-center gap-2 text-sm text-gray-500 font-medium uppercase tracking-widest animate-pulse">
+                            <Smartphone size={16} className="rotate-90" />
+                            Gira tu dispositivo
+                        </div>
+
+                        <button
+                            onClick={() => setDismissed(true)}
+                            className="mt-6 group flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/30 rounded-full transition-all duration-300 backdrop-blur-sm"
+                        >
+                            <span className="text-xs font-bold text-gray-300 group-hover:text-white uppercase tracking-wider">
+                                Continuar en Vertical
+                            </span>
+                            <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                <ArrowRight size={10} className="text-gray-400 group-hover:text-white" />
+                            </div>
+                        </button>
                     </div>
                 </motion.div>
             )}
