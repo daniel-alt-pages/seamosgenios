@@ -3,9 +3,47 @@ import { motion } from 'framer-motion';
 import { Lock, ShoppingCart } from 'lucide-react';
 import { getTimeRemaining } from '../utils/pricingLogic';
 
+// Sub-componente para manejar el temporizador de forma aislada
+const TimelineCountdown = ({ targetDate, isUnlocked, isPast }) => {
+    const [timeLeft, setTimeLeft] = useState(getTimeRemaining(targetDate));
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const remaining = getTimeRemaining(targetDate);
+            setTimeLeft(remaining);
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [targetDate]);
+
+    if (isPast) return null;
+
+    return (
+        <div className="mb-4">
+            <div className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">
+                {isUnlocked ? "TIEMPO RESTANTE" : "SE DESBLOQUEA EN"}
+            </div>
+            <div className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-lg border border-white/10 backdrop-blur-sm">
+                <div className="text-center min-w-[32px]">
+                    <span className="block text-lg font-bold text-white leading-none">{timeLeft.days}</span>
+                    <span className="text-[8px] text-gray-500 uppercase font-semibold">Días</span>
+                </div>
+                <span className="text-gray-600 font-bold mb-2">:</span>
+                <div className="text-center min-w-[32px]">
+                    <span className="block text-lg font-bold text-white leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
+                    <span className="text-[8px] text-gray-500 uppercase font-semibold">Hrs</span>
+                </div>
+                <span className="text-gray-600 font-bold mb-2">:</span>
+                <div className="text-center min-w-[32px]">
+                    <span className="block text-lg font-bold text-white leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                    <span className="text-[8px] text-gray-500 uppercase font-semibold">Min</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const CourseTimeline = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [countdowns, setCountdowns] = useState({});
 
     const currentYear = currentDate.getFullYear();
     const nextYear = currentYear + 1;
@@ -66,19 +104,7 @@ const CourseTimeline = () => {
         return () => clearInterval(dateInterval);
     }, []);
 
-    useEffect(() => {
-        const countdownInterval = setInterval(() => {
-            const newCountdowns = {};
-            timelineData.forEach((item, index) => {
-                const now = new Date();
-                const target = now < item.unlockDate ? item.unlockDate : item.targetDate;
-                newCountdowns[index] = getTimeRemaining(target);
-            });
-            setCountdowns(newCountdowns);
-        }, 1000);
 
-        return () => clearInterval(countdownInterval);
-    }, [timelineData]);
 
     return (
         <section className="py-24 relative overflow-hidden">
@@ -107,7 +133,6 @@ const CourseTimeline = () => {
                     {timelineData.map((item, index) => {
                         const isUnlocked = currentDate >= item.unlockDate;
                         const isPast = currentDate > item.targetDate;
-                        const countdown = countdowns[index] || { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
                         return (
                             <motion.div
@@ -237,27 +262,11 @@ const CourseTimeline = () => {
                                             {/* Action / Countdown */}
                                             <div className="flex flex-col items-center justify-center min-w-[200px] text-center mt-0 xl:mt-0 w-full xl:w-auto">
                                                 {!isPast && (
-                                                    <div className="mb-4">
-                                                        <div className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">
-                                                            {isUnlocked ? "TIEMPO RESTANTE" : "SE DESBLOQUEA EN"}
-                                                        </div>
-                                                        <div className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-lg border border-white/10 backdrop-blur-sm">
-                                                            <div className="text-center min-w-[32px]">
-                                                                <span className="block text-lg font-bold text-white leading-none">{countdown.days}</span>
-                                                                <span className="text-[8px] text-gray-500 uppercase font-semibold">Días</span>
-                                                            </div>
-                                                            <span className="text-gray-600 font-bold mb-2">:</span>
-                                                            <div className="text-center min-w-[32px]">
-                                                                <span className="block text-lg font-bold text-white leading-none">{String(countdown.hours).padStart(2, '0')}</span>
-                                                                <span className="text-[8px] text-gray-500 uppercase font-semibold">Hrs</span>
-                                                            </div>
-                                                            <span className="text-gray-600 font-bold mb-2">:</span>
-                                                            <div className="text-center min-w-[32px]">
-                                                                <span className="block text-lg font-bold text-white leading-none">{String(countdown.minutes).padStart(2, '0')}</span>
-                                                                <span className="text-[8px] text-gray-500 uppercase font-semibold">Min</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <TimelineCountdown
+                                                        targetDate={item.targetDate < item.unlockDate ? item.unlockDate : item.targetDate}
+                                                        isUnlocked={isUnlocked}
+                                                        isPast={isPast}
+                                                    />
                                                 )}
 
                                                 {isUnlocked && !isPast && (
