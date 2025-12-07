@@ -133,8 +133,8 @@ const Navbar = () => {
                             <div className="flex-1 flex flex-col justify-center px-6 gap-6">
                                 {menuItems.map((item, i) => (
                                     <motion.a
-                                        key={item}
-                                        href={`#${item.toLowerCase()}`}
+                                        key={item.label}
+                                        href={`#${item.id}`}
                                         className="group relative flex items-center gap-3 text-2xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-gray-400 to-gray-600 hover:from-white hover:to-gray-200 transition-all"
                                         onClick={() => setIsOpen(false)}
                                         initial="hidden"
@@ -154,9 +154,9 @@ const Navbar = () => {
                                     >
                                         {/* Staggered Letter Animation */}
                                         <span className="flex">
-                                            {item.split("").map((char, charIndex) => (
+                                            {item.label.split("").map((char, charIndex) => (
                                                 <motion.span
-                                                    key={`${item}-${charIndex}`}
+                                                    key={`${item.label}-${charIndex}`}
                                                     variants={{
                                                         hidden: { opacity: 0, y: 10 },
                                                         visible: { opacity: 1, y: 0 }
