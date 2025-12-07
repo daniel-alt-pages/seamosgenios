@@ -59,7 +59,7 @@ const Navbar = () => {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.1 * index }}
-                                className="text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors relative group"
+                                className="text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-white transition-colors relative group drop-shadow-md"
                             >
                                 {item.label}
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-orange-600 transition-all duration-300 group-hover:w-full" />
