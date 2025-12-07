@@ -12,18 +12,36 @@ import RotateDevicePrompt from './components/RotateDevicePrompt';
 
 function App() {
   // Scroll Spy Logic
+  // Handle Initial Hash Scroll & Scroll Spy
   useEffect(() => {
+    // 1. Initial Scroll Handler
+    const handleInitialHash = () => {
+      const { hash } = window.location;
+      if (hash) {
+        // Wait slightly for layout to stabilize
+        setTimeout(() => {
+          const id = hash.replace('#', '');
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    };
+
+    handleInitialHash();
+
+    // 2. Scroll Spy Logic
     const handleScroll = () => {
       const sections = ['precios', 'cronograma', 'ranking', 'tutores', 'nosotros'];
       let currentSection = '';
 
-      // Check which section is most visible in the viewport
+      // Check which section is most visible
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Logic: If the top of the section is within the top half of the viewport
-          // OR if the section covers a significant portion of the viewport
+          // Logic: visible if top is in upper half or covers middle of viewport
           if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
             currentSection = sectionId;
             break;
@@ -31,19 +49,20 @@ function App() {
         }
       }
 
-      // Update URL hash without jumping
-      if (currentSection && window.location.hash !== `#${currentSection}`) {
-        // Using replaceState prevents filling up the browser history
-        window.history.replaceState(null, null, `#${currentSection}`);
-      } else if (!currentSection && window.scrollY < 100) {
-        // Remove hash if at very top (Hero)
+      // Update URL hash without jumping, only if changed and visible
+      if (currentSection) {
+        if (window.location.hash !== `#${currentSection}`) {
+          window.history.replaceState(null, null, `#${currentSection}`);
+        }
+      } else if (window.scrollY < 100) {
+        // Remove hash at very top
         if (window.location.hash) {
           window.history.replaceState(null, null, ' ');
         }
       }
     };
 
-    // Throttle scroll event slightly for performance
+    // Throttle scroll event
     let timeoutId = null;
     const throttledScroll = () => {
       if (!timeoutId) {
