@@ -6,6 +6,8 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
+    const [showModal, setShowModal] = useState(false);
+
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
@@ -66,7 +68,10 @@ const Navbar = () => {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="hidden lg:block"
                     >
-                        <button className="group px-6 py-2.5 glass-strong hover:bg-white/10 border border-white/10 hover:border-red-500/50 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 hover-lift flex items-center gap-2">
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="group px-6 py-2.5 glass-strong hover:bg-white/10 border border-white/10 hover:border-red-500/50 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 hover-lift flex items-center gap-2"
+                        >
                             <Sparkles size={14} className="text-red-400 group-hover:animate-pulse" />
                             Aula Virtual
                         </button>
@@ -166,6 +171,10 @@ const Navbar = () => {
                             {/* Footer / CTA */}
                             <div className="p-8 border-t border-white/5">
                                 <motion.button
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        setShowModal(true);
+                                    }}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.5 }}
@@ -176,6 +185,49 @@ const Navbar = () => {
                                 </motion.button>
                             </div>
                         </motion.aside>
+                    </>
+                )}
+            </AnimatePresence>
+
+            {/* Modal de Muy Pronto */}
+            <AnimatePresence>
+                {showModal && (
+                    <>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowModal(false)}
+                            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000] flex items-center justify-center p-4 cursor-pointer"
+                        >
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-[#121212] border border-white/10 rounded-3xl p-8 max-w-md w-full text-center relative overflow-hidden"
+                            >
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-gradient-x" />
+
+                                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <Sparkles size={32} className="text-red-500 animate-pulse" />
+                                </div>
+
+                                <h3 className="text-2xl font-black text-white mb-3">
+                                    ¡Muy Pronto!
+                                </h3>
+                                <p className="text-gray-400 mb-8 leading-relaxed">
+                                    Estamos finalizando los detalles de nuestra nueva Aula Virtual. Prepárate para una experiencia de aprendizaje revolucionaria.
+                                </p>
+
+                                <button
+                                    onClick={() => setShowModal(false)}
+                                    className="w-full py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors"
+                                >
+                                    Entendido
+                                </button>
+                            </motion.div>
+                        </motion.div>
                     </>
                 )}
             </AnimatePresence>

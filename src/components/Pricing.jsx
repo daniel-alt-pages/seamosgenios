@@ -220,8 +220,7 @@ const Pricing = () => {
 
                                     {/* Pricing */}
                                     <div className="flex items-end gap-3 mb-6 md:mb-8">
-                                        <span className={`text-4xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'
-                                            }`}>
+                                        <span className={`text-4xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'}`}>
                                             {plan.price}
                                         </span>
                                         {plan.originalPrice && (
@@ -316,7 +315,7 @@ const Pricing = () => {
                     </div>
                 </motion.div>
             </div>
-        </section>
+        </section >
     );
 };
 

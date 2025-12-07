@@ -192,13 +192,34 @@ const CourseTimeline = () => {
                                                             <div className="h-8 w-px bg-white/10"></div>
 
                                                             {/* Precio Oferta */}
+                                                            {/* Precio Oferta */}
                                                             <div>
-                                                                <div className="text-[10px] text-red-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
-                                                                    Oferta
-                                                                </div>
-                                                                <div className={`text-2xl md:text-3xl font-bold tracking-tight ${isUnlocked ? 'text-white' : 'text-gray-600'}`}>
-                                                                    {item.price}
-                                                                </div>
+                                                                {isUnlocked ? (
+                                                                    <>
+                                                                        <div className="text-[10px] text-red-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
+                                                                            Oferta
+                                                                        </div>
+                                                                        <div className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+                                                                            {item.price}
+                                                                        </div>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
+                                                                            Bloqueado
+                                                                        </div>
+                                                                        <div className="relative group cursor-help">
+                                                                            <div className="text-2xl md:text-3xl font-bold tracking-tight text-white/30 blur-[6px] group-hover:blur-[3px] transition-all duration-500 select-none">
+                                                                                {item.price}
+                                                                            </div>
+                                                                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                                                                <span className="text-[8px] font-bold text-white bg-red-600/80 px-1.5 py-0.5 rounded border border-red-500/50 backdrop-blur-md shadow-lg transform -translate-y-1 group-hover:translate-y-0 transition-transform">
+                                                                                    SPOILER
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                )}
                                                             </div>
 
                                                             {/* Ahorro Badge */}

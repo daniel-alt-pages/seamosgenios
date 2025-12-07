@@ -7,7 +7,7 @@ const Tutors = () => {
             name: "Daniel De La Cruz",
             role: "Presidente y Fundador (+5 Años)",
             institution: "Universidad del Rosario - Escuela de Administración",
-            description: "Condecorado 2 veces por excelencia académica en el diplomado Samsung Innovation Campus. Ganador de Hackathon. Completamente autodidacta.",
+            description: "Condecorado 2 veces por excelencia académica en el diplomado Samsung Innovation Campus. Ganador de una Hackathon de Programación. Completamente autodidacta.",
             highlight: "Líder Visionario",
             image: "https://i.ibb.co/2716K9yw/Daniel-De-La-Cruz-SEAMOSGENIOS.jpg",
             icon: Crown,
