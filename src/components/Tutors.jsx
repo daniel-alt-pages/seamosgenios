@@ -153,7 +153,7 @@ const Tutors = () => {
                         <User size={16} />
                         <span className="uppercase tracking-wider">Equipo Académico</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
+                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-white flex items-center justify-center gap-4">
                         Mentores de <span className="text-fire-animated">Excelencia</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg">

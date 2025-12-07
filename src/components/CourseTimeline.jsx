@@ -119,7 +119,7 @@ const CourseTimeline = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-5xl font-black mb-6 text-white leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-black mb-6 text-white leading-tight flex items-center justify-center gap-4">
                         Evolución de Precios <br />
                         <span className="text-fire-animated">Calendarios A y B</span>
                     </h2>

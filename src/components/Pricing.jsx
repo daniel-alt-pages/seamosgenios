@@ -101,7 +101,7 @@ const Pricing = () => {
                         <span className="uppercase tracking-wider">Inversión en tu Futuro</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-6xl font-black text-center mb-6 text-white">
+                    <h2 className="text-4xl md:text-6xl font-black text-center mb-6 text-white flex items-center justify-center gap-4">
                         Elige tu <span className="text-fire-animated">Camino</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
