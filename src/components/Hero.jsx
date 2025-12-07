@@ -5,8 +5,8 @@ import { ArrowRight, Zap, Sparkles, Calendar } from 'lucide-react';
 // Componente TimeUnit fuera del render
 const TimeUnit = ({ value, label }) => (
     <div className="flex flex-col items-center gap-2">
-        <div className="bg-black/40 border border-white/10 backdrop-blur-md rounded-lg min-w-[50px] md:min-w-[80px] h-[50px] md:h-[80px] flex items-center justify-center p-2">
-            <span className="text-2xl sm:text-3xl md:text-5xl font-black text-white tabular-nums leading-none">
+        <div className="bg-black/40 border border-white/10 backdrop-blur-md rounded-lg w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 flex items-center justify-center p-2">
+            <span className="text-xl sm:text-3xl lg:text-4xl font-black text-white tabular-nums leading-none">
                 {value < 10 ? `0${value}` : value}
             </span>
         </div>

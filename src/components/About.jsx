@@ -107,7 +107,7 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
+                        <h2 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">
                             Más que un PreICFES, <br />
                             somos una <span className="text-fire-animated">Revolución</span>
                         </h2>

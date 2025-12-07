@@ -107,7 +107,7 @@ const CourseTimeline = () => {
 
 
     return (
-        <section className="py-24 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden" id="cronograma">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-grid-pattern opacity-30" />
             <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px]" />

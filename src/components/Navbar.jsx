@@ -17,7 +17,12 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const menuItems = ['Inicio', 'Nosotros', 'Planes', 'Contacto'];
+    const menuItems = [
+        { label: 'Inicio', id: 'inicio' },
+        { label: 'Nosotros', id: 'nosotros' },
+        { label: 'Planes', id: 'precios' },
+        { label: 'Contacto', id: 'contacto' }
+    ];
 
     return (
         <nav className={`fixed w-full top-0 left-0 transition-all duration-500 ${isOpen ? 'z-[999]' : 'z-50'} ${scrolled
@@ -49,14 +54,14 @@ const Navbar = () => {
                     >
                         {menuItems.map((item, index) => (
                             <motion.a
-                                key={item}
-                                href={`#${item.toLowerCase()}`}
+                                key={item.label}
+                                href={`#${item.id}`}
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.1 * index }}
                                 className="text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors relative group"
                             >
-                                {item}
+                                {item.label}
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-orange-600 transition-all duration-300 group-hover:w-full" />
                             </motion.a>
                         ))}
