@@ -219,12 +219,12 @@ const Pricing = () => {
                                     )}
 
                                     {/* Pricing */}
-                                    <div className="flex items-end gap-3 mb-6 md:mb-8">
-                                        <span className={`text-4xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'}`}>
+                                    <div className="flex flex-wrap items-end gap-x-3 gap-y-1 mb-6 md:mb-8">
+                                        <span className={`text-3xl sm:text-4xl md:text-5xl font-black ${plan.popular ? 'text-gradient' : 'text-white'}`}>
                                             {plan.price}
                                         </span>
                                         {plan.originalPrice && (
-                                            <span className="text-gray-500 line-through text-lg mb-2">
+                                            <span className="text-gray-500 line-through text-base md:text-lg mb-1.5 md:mb-2">
                                                 {plan.originalPrice}
                                             </span>
                                         )}

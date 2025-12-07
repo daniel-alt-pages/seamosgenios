@@ -7,9 +7,12 @@ import Ranking from './components/Ranking';
 import Tutors from './components/Tutors';
 import About from './components/About';
 
+import RotateDevicePrompt from './components/RotateDevicePrompt';
+
 function App() {
   return (
     <div className="min-h-screen bg-background text-white selection:bg-red-500/30">
+      <RotateDevicePrompt />
       <Navbar />
       <Hero />
       <Pricing />

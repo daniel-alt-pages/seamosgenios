@@ -5,12 +5,12 @@ import { ArrowRight, Zap, Sparkles, Calendar } from 'lucide-react';
 // Componente TimeUnit fuera del render
 const TimeUnit = ({ value, label }) => (
     <div className="flex flex-col items-center gap-2">
-        <div className="bg-black/40 border border-white/10 backdrop-blur-md rounded-lg min-w-[60px] md:min-w-[80px] h-[60px] md:h-[80px] flex items-center justify-center">
-            <span className="text-3xl md:text-5xl font-black text-white tabular-nums leading-none">
+        <div className="bg-black/40 border border-white/10 backdrop-blur-md rounded-lg min-w-[50px] md:min-w-[80px] h-[50px] md:h-[80px] flex items-center justify-center p-2">
+            <span className="text-2xl sm:text-3xl md:text-5xl font-black text-white tabular-nums leading-none">
                 {value < 10 ? `0${value}` : value}
             </span>
         </div>
-        <span className="text-[9px] md:text-xs text-gray-500 uppercase tracking-wider font-bold">{label}</span>
+        <span className="text-[8px] md:text-xs text-gray-500 uppercase tracking-wider font-bold">{label}</span>
     </div>
 );
 
@@ -49,7 +49,7 @@ const ExamCountdown = ({ targetDate, examName, calendarType }) => {
         <div className={`glass-strong rounded-2xl p-6 border ${calendarType === 'B' ? 'border-red-500/30' : 'border-white/20'}`}>
             <div className="flex items-center justify-center gap-2 mb-4">
                 <Calendar className={`w-4 h-4 ${calendarType === 'B' ? 'text-red-500' : 'text-white'}`} />
-                <h3 className={`text-xs md:text-sm font-bold uppercase tracking-wider ${calendarType === 'B' ? 'text-red-400' : 'text-white'}`}>
+                <h3 className={`text-[10px] md:text-sm font-bold uppercase tracking-wider text-center ${calendarType === 'B' ? 'text-red-400' : 'text-white'}`}>
                     {examName}
                 </h3>
             </div>

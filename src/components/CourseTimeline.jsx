@@ -103,7 +103,7 @@ const CourseTimeline = () => {
                     </p>
                 </motion.div>
 
-                <div className="relative ml-8 md:mx-auto max-w-4xl pl-16 md:pl-0">
+                <div className="relative ml-8 md:mx-auto max-w-4xl pl-12 md:pl-0">
                     {timelineData.map((item, index) => {
                         const isUnlocked = currentDate >= item.unlockDate;
                         const isPast = currentDate > item.targetDate;

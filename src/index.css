@@ -76,7 +76,7 @@ body::before {
   background-image: url('https://images.prismic.io/seamosgenios2026/aR-VA2GnmrmGqGJ-_FONDO.png?auto=format,compress');
   background-size: cover;
   background-position: center;
-  opacity: 0.01;
+  opacity: 0.025;
   /* Increased to 0.2 so it is visible but subtle */
   pointer-events: none;
   z-index: -1;
