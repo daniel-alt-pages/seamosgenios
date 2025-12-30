@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, ShoppingCart } from 'lucide-react';
 import { getTimeRemaining } from '../utils/pricingLogic';
-import { useFormatPrice } from '../contexts/SiteConfigContext';
+import { useSiteConfig, useFormatPrice } from '../contexts/SiteConfigContext';
 
 // Sub-componente para manejar el temporizador de forma aislada
 const TimelineCountdown = ({ targetDate, isUnlocked, isPast }) => {
@@ -45,52 +45,72 @@ const TimelineCountdown = ({ targetDate, isUnlocked, isPast }) => {
 
 const CourseTimeline = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
+    const { config } = useSiteConfig();
     const formatPrice = useFormatPrice();
 
-    // Timeline hardcodeado con fechas correctas
-    // Fase 1 ya está disponible, las demás se desbloquean en sus fechas
-    const timelineData = [
+    // Datos hardcodeados por defecto (fallback)
+    const defaultTimeline = [
         {
+            id: "fase-1",
             title: "Fase 1: Lanzamiento",
             dateLabel: "Hasta 10 Ene",
-            targetDate: new Date(2025, 0, 10), // 10 de Enero 2025
-            unlockDate: new Date(2024, 11, 1),  // 1 de Diciembre 2024 (YA DESBLOQUEADA)
+            targetDate: "2025-01-10",
+            unlockDate: "2024-12-01", // YA DESBLOQUEADA
             description: "Venta habilitada para inicio 10 Ene.",
-            price: formatPrice(375000),
-            basePrice: formatPrice(500000),
-            savings: "$125.000 (25% OFF)"
+            price: 375000,
+            basePrice: 500000,
+            savingsText: "$125.000 (25% OFF)"
         },
         {
+            id: "fase-2",
             title: "Fase 2: Enero",
             dateLabel: "Abre: 1 de Enero",
-            targetDate: new Date(2025, 0, 31), // 31 de Enero 2025
-            unlockDate: new Date(2025, 0, 1),  // 1 de Enero 2025
+            targetDate: "2025-01-31",
+            unlockDate: "2025-01-01",
             description: "Inicio de clases grupo Enero.",
-            price: formatPrice(325000),
-            basePrice: formatPrice(500000),
-            savings: "$175.000 (35% OFF)"
+            price: 325000,
+            basePrice: 500000,
+            savingsText: "$175.000 (35% OFF)"
         },
         {
+            id: "fase-3",
             title: "Fase 3: Febrero",
             dateLabel: "Abre: 1 de Febrero",
-            targetDate: new Date(2025, 1, 28), // 28 de Febrero 2025
-            unlockDate: new Date(2025, 1, 1),  // 1 de Febrero 2025
+            targetDate: "2025-02-28",
+            unlockDate: "2025-02-01",
             description: "Inicio de clases grupo Febrero.",
-            price: formatPrice(295000),
-            basePrice: formatPrice(500000),
-            savings: "$205.000 (41% OFF)"
+            price: 295000,
+            basePrice: 500000,
+            savingsText: "$205.000 (41% OFF)"
         },
         {
+            id: "fase-4",
             title: "Fase 4: Cierre Combo",
             dateLabel: "Cierre: 10 de Marzo",
-            targetDate: new Date(2025, 2, 10), // 10 de Marzo 2025
-            unlockDate: new Date(2025, 2, 1),  // 1 de Marzo 2025
+            targetDate: "2025-03-10",
+            unlockDate: "2025-03-01",
             description: "Última oportunidad para Combo B+A.",
-            price: "Última Oportunidad",
-            basePrice: formatPrice(500000),
-            savings: "Finaliza Venta Combos"
+            price: null,
+            priceText: "Última Oportunidad",
+            basePrice: 500000,
+            savingsText: "Finaliza Venta Combos"
         }
     ];
+
+    // Usar datos de Firestore si existen, sino usar hardcodeados
+    const rawTimeline = config?.timeline?.length > 0 ? config.timeline : defaultTimeline;
+
+    // Transformar datos al formato del componente
+    const timelineData = rawTimeline.map(phase => ({
+        title: phase.title,
+        dateLabel: phase.dateLabel,
+        targetDate: new Date(phase.targetDate),
+        unlockDate: new Date(phase.unlockDate),
+        description: phase.description,
+        price: phase.price ? formatPrice(phase.price) : (phase.priceText || "Próximamente"),
+        basePrice: phase.basePrice ? formatPrice(phase.basePrice) : "$500.000",
+        savings: phase.savingsText || ""
+    }));
 
 
     useEffect(() => {
