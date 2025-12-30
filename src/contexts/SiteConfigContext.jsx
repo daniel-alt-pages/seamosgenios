@@ -90,37 +90,37 @@ const DEFAULT_CONFIG = {
         examDateA: "2025-07-25"
     },
 
-    // Timeline de fases de venta
+    // Timeline de fases de venta (Año 2025-2026)
     timeline: [
         {
             id: "fase-1",
             title: "Fase 1: Lanzamiento",
-            dateLabel: "Hasta 10 Dic",
-            targetDate: "2024-12-10",
-            unlockDate: "2024-12-01",
-            description: "Venta habilitada para inicio 10 Dic.",
+            dateLabel: "Hasta 10 Ene",
+            targetDate: "2025-01-10",
+            unlockDate: "2025-01-01",
+            description: "Venta habilitada para inicio 10 Ene.",
             price: 375000,
             basePrice: 500000,
             savingsText: "$125.000 (25% OFF)"
         },
         {
             id: "fase-2",
-            title: "Fase 2: Enero",
-            dateLabel: "Abre: 1 de Enero",
-            targetDate: "2025-01-10",
-            unlockDate: "2025-01-01",
-            description: "Inicio de clases grupo Enero.",
+            title: "Fase 2: Febrero",
+            dateLabel: "Abre: 1 de Febrero",
+            targetDate: "2025-02-10",
+            unlockDate: "2025-02-01",
+            description: "Inicio de clases grupo Febrero.",
             price: 325000,
             basePrice: 500000,
             savingsText: "$175.000 (35% OFF)"
         },
         {
             id: "fase-3",
-            title: "Fase 3: Febrero",
-            dateLabel: "Abre: 1 de Febrero",
-            targetDate: "2025-02-10",
-            unlockDate: "2025-02-01",
-            description: "Inicio de clases grupo Febrero.",
+            title: "Fase 3: Marzo",
+            dateLabel: "Abre: 1 de Marzo",
+            targetDate: "2025-03-10",
+            unlockDate: "2025-03-01",
+            description: "Inicio de clases grupo Marzo.",
             price: 295000,
             basePrice: 500000,
             savingsText: "$205.000 (41% OFF)"
@@ -128,9 +128,9 @@ const DEFAULT_CONFIG = {
         {
             id: "fase-4",
             title: "Fase 4: Cierre Combo",
-            dateLabel: "Cierre: 10 de Marzo",
-            targetDate: "2025-03-10",
-            unlockDate: "2025-03-01",
+            dateLabel: "Cierre: 10 de Abril",
+            targetDate: "2025-04-10",
+            unlockDate: "2025-04-01",
             description: "Última oportunidad para Combo B+A.",
             price: null,
             priceText: "Última Oportunidad",
