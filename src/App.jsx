@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -7,10 +8,12 @@ import Pricing from './components/Pricing';
 import Ranking from './components/Ranking';
 import Tutors from './components/Tutors';
 import About from './components/About';
-
 import RotateDevicePrompt from './components/RotateDevicePrompt';
+import AdminPanel from './pages/AdminPanel';
 
-function App() {
+// Componente del sitio público
+function PublicSite() {
+  const location = useLocation();
   // Scroll Spy Logic
   // Handle Initial Hash Scroll & Scroll Spy
   useEffect(() => {
@@ -114,6 +117,17 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// Componente principal con rutas
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<PublicSite />} />
+      <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/admin/*" element={<AdminPanel />} />
+    </Routes>
   );
 }
 

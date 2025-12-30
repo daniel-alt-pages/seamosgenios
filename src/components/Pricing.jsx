@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Lock, Clock, Star, Zap, Crown, Timer, Calendar as CalendarIcon, Loader2 } from 'lucide-react';
 import { getPricingInfo, getTimeRemaining, formatDate } from '../utils/pricingLogic';
+import { useSiteConfig, useFormatPrice } from '../contexts/SiteConfigContext';
 
 // Componente para el contador regresivo individual de cada plan
 const PlanCountdown = ({ targetDate, label }) => {
@@ -11,7 +12,7 @@ const PlanCountdown = ({ targetDate, label }) => {
         if (!targetDate) return;
 
         const updateCountdown = () => {
-            const timeLeft = getTimeRemaining(targetDate);
+            const timeLeft = getTimeRemaining(new Date(targetDate));
             setCountdown(timeLeft);
         };
 
@@ -55,17 +56,24 @@ const PlanCountdown = ({ targetDate, label }) => {
 };
 
 const Pricing = () => {
-    const [plans, setPlans] = useState([]);
-    const [loadingPlan, setLoadingPlan] = useState(null); // Estado para la animación de carga
+    const { config, loading: configLoading } = useSiteConfig();
+    const formatPrice = useFormatPrice();
+    const [loadingPlan, setLoadingPlan] = useState(null);
 
-    useEffect(() => {
-        const updatePlans = () => {
-            setPlans(getPricingInfo());
-        };
-        updatePlans();
-        const plansInterval = setInterval(updatePlans, 60000);
-        return () => clearInterval(plansInterval);
-    }, []);
+    // Obtener planes de Firestore o usar fallback
+    const firestorePlans = config?.plans || [];
+
+    // Transformar planes de Firestore al formato esperado por el componente
+    const plans = firestorePlans.map(plan => ({
+        ...plan,
+        price: formatPrice(plan.price),
+        originalPrice: plan.originalPrice ? formatPrice(plan.originalPrice) : null,
+        whatsappLink: `https://wa.me/${config?.brand?.whatsappNumber || '573008871908'}?text=${encodeURIComponent(`Hola, quiero inscribirme al ${plan.name} de ${formatPrice(plan.price)}. ¿Podrían darme más información?`)}`,
+        countdownTarget: plan.inscriptionDeadline,
+        countdownLabel: plan.urgent ? "Inscripciones cierran en" : "Inicio de clases en",
+        startDate: plan.startDate ? new Date(plan.startDate) : null,
+        endDate: plan.endDate ? new Date(plan.endDate) : null
+    }));
 
     const getIconForPlan = (index) => {
         const icons = [Star, Zap, Crown];

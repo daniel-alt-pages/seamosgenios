@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, ShoppingCart } from 'lucide-react';
 import { getTimeRemaining } from '../utils/pricingLogic';
+import { useSiteConfig, useFormatPrice } from '../contexts/SiteConfigContext';
 
 // Sub-componente para manejar el temporizador de forma aislada
 const TimelineCountdown = ({ targetDate, isUnlocked, isPast }) => {
@@ -44,57 +45,23 @@ const TimelineCountdown = ({ targetDate, isUnlocked, isPast }) => {
 
 const CourseTimeline = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
+    const { config } = useSiteConfig();
+    const formatPrice = useFormatPrice();
 
-    const currentYear = currentDate.getFullYear();
-    const nextYear = currentYear + 1;
+    // Obtener timeline desde Firestore o usar datos por defecto
+    const firestoreTimeline = config?.timeline || [];
 
-    // Fechas clave para el Timeline de Ventas y Curso
-    const timelineData = [
-        {
-            title: "Fase 1: Lanzamiento",
-            dateLabel: "Hasta 10 Dic",
-            targetDate: new Date(currentYear, 11, 10), // 10 Dic
-            status: "En Curso",
-            description: "Venta habilitada para inicio 10 Dic.",
-            unlockDate: new Date(currentYear, 11, 1), // 1 Dic
-            price: "$375.000",
-            basePrice: "$500.000",
-            savings: "$125.000 (25% OFF)"
-        },
-        {
-            title: "Fase 2: Enero",
-            dateLabel: "Abre: 1 de Enero",
-            targetDate: new Date(nextYear, 0, 10), // 10 Ene
-            status: "Próximamente",
-            description: "Inicio de clases grupo Enero.",
-            unlockDate: new Date(nextYear, 0, 1), // 1 Ene
-            price: "$325.000",
-            basePrice: "$500.000",
-            savings: "$175.000 (35% OFF)"
-        },
-        {
-            title: "Fase 3: Febrero",
-            dateLabel: "Abre: 1 de Febrero",
-            targetDate: new Date(nextYear, 1, 10), // 10 Feb
-            status: "Próximamente",
-            description: "Inicio de clases grupo Febrero.",
-            unlockDate: new Date(nextYear, 1, 1), // 1 Feb
-            price: "$295.000",
-            basePrice: "$500.000",
-            savings: "$205.000 (41% OFF)"
-        },
-        {
-            title: "Fase 4: Cierre Combo",
-            dateLabel: "Cierre: 10 de Marzo",
-            targetDate: new Date(nextYear, 2, 10), // 10 Mar
-            status: "Próximamente",
-            description: "Última oportunidad para Combo B+A.",
-            unlockDate: new Date(nextYear, 2, 1), // 1 Mar
-            price: "Última Oportunidad",
-            basePrice: "$500.000",
-            savings: "Finaliza Venta Combos"
-        }
-    ];
+    // Transformar datos de Firestore al formato del componente
+    const timelineData = firestoreTimeline.map(phase => ({
+        title: phase.title,
+        dateLabel: phase.dateLabel,
+        targetDate: new Date(phase.targetDate),
+        unlockDate: new Date(phase.unlockDate),
+        description: phase.description,
+        price: phase.price ? formatPrice(phase.price) : (phase.priceText || "Próximamente"),
+        basePrice: phase.basePrice ? formatPrice(phase.basePrice) : "$500.000",
+        savings: phase.savingsText || ""
+    }));
 
     useEffect(() => {
         const dateInterval = setInterval(() => {
