@@ -48,70 +48,71 @@ const CourseTimeline = () => {
     const { config } = useSiteConfig();
     const formatPrice = useFormatPrice();
 
+    const currentYear = currentDate.getFullYear();
+    const nextYear = currentYear + 1;
+
     // Datos hardcodeados por defecto (fallback)
-    const defaultTimeline = [
+    const defaultTimelineData = [
         {
-            id: "fase-1",
             title: "Fase 1: Lanzamiento",
-            dateLabel: "Hasta 10 Ene",
-            targetDate: "2025-01-10",
-            unlockDate: "2024-12-01", // YA DESBLOQUEADA
-            description: "Venta habilitada para inicio 10 Ene.",
-            price: 375000,
+            dateLabel: "Hasta 10 Dic",
+            targetDate: new Date(currentYear, 11, 10), // 10 Dic
+            status: "En Curso",
+            description: "Venta habilitada para inicio 10 Dic.",
+            unlockDate: new Date(currentYear, 11, 1), // 1 Dic (YA DESBLOQUEADA)
+            price: 400000,
             basePrice: 500000,
-            savingsText: "$125.000 (25% OFF)"
+            savings: "$100.000 (20% OFF)"
         },
         {
-            id: "fase-2",
             title: "Fase 2: Enero",
             dateLabel: "Abre: 1 de Enero",
-            targetDate: "2025-01-31",
-            unlockDate: "2025-01-01",
+            targetDate: new Date(nextYear, 0, 10), // 10 Ene
+            status: "Próximamente",
             description: "Inicio de clases grupo Enero.",
-            price: 325000,
+            unlockDate: new Date(nextYear, 0, 1), // 1 Ene
+            price: 425000,
             basePrice: 500000,
-            savingsText: "$175.000 (35% OFF)"
+            savings: "$75.000 (15% OFF)"
         },
         {
-            id: "fase-3",
             title: "Fase 3: Febrero",
             dateLabel: "Abre: 1 de Febrero",
-            targetDate: "2025-02-28",
-            unlockDate: "2025-02-01",
+            targetDate: new Date(nextYear, 1, 10), // 10 Feb
+            status: "Próximamente",
             description: "Inicio de clases grupo Febrero.",
-            price: 295000,
+            unlockDate: new Date(nextYear, 1, 1), // 1 Feb
+            price: 375000,
             basePrice: 500000,
-            savingsText: "$205.000 (41% OFF)"
+            savings: "$125.000 (25% OFF)"
         },
         {
-            id: "fase-4",
             title: "Fase 4: Cierre Combo",
             dateLabel: "Cierre: 10 de Marzo",
-            targetDate: "2025-03-10",
-            unlockDate: "2025-03-01",
+            targetDate: new Date(nextYear, 2, 10), // 10 Mar
+            status: "Próximamente",
             description: "Última oportunidad para Combo B+A.",
-            price: null,
-            priceText: "Última Oportunidad",
+            unlockDate: new Date(nextYear, 2, 1), // 1 Mar
+            price: 350000,
             basePrice: 500000,
-            savingsText: "Finaliza Venta Combos"
+            savings: "$150.000 (30% OFF)"
         }
     ];
 
-    // Usar datos de Firestore si existen, sino usar hardcodeados
-    const rawTimeline = config?.timeline?.length > 0 ? config.timeline : defaultTimeline;
-
-    // Transformar datos al formato del componente
-    const timelineData = rawTimeline.map(phase => ({
-        title: phase.title,
-        dateLabel: phase.dateLabel,
-        targetDate: new Date(phase.targetDate),
-        unlockDate: new Date(phase.unlockDate),
-        description: phase.description,
-        price: phase.price ? formatPrice(phase.price) : (phase.priceText || "Próximamente"),
-        basePrice: phase.basePrice ? formatPrice(phase.basePrice) : "$500.000",
-        savings: phase.savingsText || ""
-    }));
-
+    // Si hay datos de Firestore, usarlos; sino usar los hardcodeados
+    const timelineData = (config?.timeline?.length > 0)
+        ? config.timeline.map(phase => ({
+            title: phase.title,
+            dateLabel: phase.dateLabel,
+            targetDate: new Date(phase.targetDate),
+            unlockDate: new Date(phase.unlockDate),
+            description: phase.description,
+            price: phase.price,
+            priceText: phase.priceText,
+            basePrice: phase.basePrice || 500000,
+            savings: phase.savingsText || ""
+        }))
+        : defaultTimelineData;
 
     useEffect(() => {
         const dateInterval = setInterval(() => {
@@ -120,8 +121,6 @@ const CourseTimeline = () => {
 
         return () => clearInterval(dateInterval);
     }, []);
-
-
 
     return (
         <section className="py-24 relative overflow-hidden" id="cronograma">
@@ -150,6 +149,8 @@ const CourseTimeline = () => {
                     {timelineData.map((item, index) => {
                         const isUnlocked = currentDate >= item.unlockDate;
                         const isPast = currentDate > item.targetDate;
+                        const displayPrice = item.price ? formatPrice(item.price) : (item.priceText || "Próximamente");
+                        const displayBasePrice = formatPrice(item.basePrice);
 
                         return (
                             <motion.div
@@ -160,8 +161,6 @@ const CourseTimeline = () => {
                                 transition={{ delay: index * 0.1 }}
                                 className="mb-12 relative"
                             >
-                                {/* Stylized Dot and Connector */}
-
                                 {/* Vertical Line Segment (Connecting to next) */}
                                 {index !== timelineData.length - 1 && (
                                     <div className={`absolute -left-[56px] top-6 w-[2px] h-[calc(100%+3rem)] z-0 ${isUnlocked ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]' : 'bg-white/10'
@@ -181,7 +180,7 @@ const CourseTimeline = () => {
 
                                 {/* Active Card with Revolution Style Rotating Border */}
                                 <div className={`relative rounded-3xl overflow-hidden transition-all duration-300 group ${isUnlocked
-                                    ? 'p-[3px] shadow-2xl' /* Padding creates the border width */
+                                    ? 'p-[3px] shadow-2xl'
                                     : 'p-[1px] bg-transparent border border-white/5 opacity-60'
                                     }`}>
 
@@ -220,20 +219,19 @@ const CourseTimeline = () => {
                                                 <p className="text-gray-400 text-sm md:text-base mb-8 max-w-xl font-light leading-relaxed mx-auto xl:mx-0">{item.description}</p>
 
                                                 {/* Precios y Ahorro Futurista */}
-                                                {item.price && (
+                                                {displayPrice && (
                                                     <div className="relative group">
                                                         <div className="relative flex flex-wrap justify-center xl:justify-start items-center gap-6 bg-white/5 backdrop-blur-md w-fit px-6 py-4 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 mx-auto xl:mx-0">
 
                                                             {/* Precio Base */}
                                                             <div>
                                                                 <div className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1">Precio Base</div>
-                                                                <div className="text-base text-gray-500 font-sans line-through decoration-gray-600 decoration-1">{item.basePrice}</div>
+                                                                <div className="text-base text-gray-500 font-sans line-through decoration-gray-600 decoration-1">{displayBasePrice}</div>
                                                             </div>
 
                                                             {/* Separator - Vertical Line */}
                                                             <div className="h-8 w-px bg-white/10"></div>
 
-                                                            {/* Precio Oferta */}
                                                             {/* Precio Oferta */}
                                                             <div>
                                                                 {isUnlocked ? (
@@ -242,7 +240,7 @@ const CourseTimeline = () => {
                                                                             Oferta
                                                                         </div>
                                                                         <div className="text-xl md:text-3xl font-bold tracking-tight text-white">
-                                                                            {item.price}
+                                                                            {displayPrice}
                                                                         </div>
                                                                     </>
                                                                 ) : (
@@ -252,7 +250,7 @@ const CourseTimeline = () => {
                                                                         </div>
                                                                         <div className="relative group cursor-help">
                                                                             <div className="text-xl md:text-3xl font-bold tracking-tight text-white/30 blur-[6px] group-hover:blur-[3px] transition-all duration-500 select-none">
-                                                                                {item.price}
+                                                                                {displayPrice}
                                                                             </div>
                                                                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                                                                                 <span className="text-[8px] font-bold text-white bg-red-600/80 px-1.5 py-0.5 rounded border border-red-500/50 backdrop-blur-md shadow-lg transform -translate-y-1 group-hover:translate-y-0 transition-transform">
@@ -265,7 +263,7 @@ const CourseTimeline = () => {
                                                             </div>
 
                                                             {/* Ahorro Badge */}
-                                                            {isUnlocked && (
+                                                            {isUnlocked && item.savings && (
                                                                 <div className="ml-4 px-4 py-2 bg-green-900/10 rounded-lg border border-green-500/20 text-green-500 flex flex-col items-center">
                                                                     <span className="text-[10px] uppercase font-bold tracking-widest mb-0.5">Ahorras</span>
                                                                     <span className="font-sans font-bold text-base tracking-tight">{item.savings}</span>
@@ -288,7 +286,7 @@ const CourseTimeline = () => {
 
                                                 {isUnlocked && !isPast && (
                                                     <a
-                                                        href={`https://wa.me/573008871908?text=${encodeURIComponent(`Hola, quiero aprovechar la ${item.title} ($${item.price}) del PreICFES antes de que suba de precio.`)}`}
+                                                        href={`https://wa.me/573008871908?text=${encodeURIComponent(`Hola, quiero aprovechar la ${item.title} (${displayPrice}) del PreICFES antes de que suba de precio.`)}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="w-full md:w-auto px-6 py-3 bg-white text-black font-black uppercase tracking-wide rounded-xl hover:bg-gray-200 transition-all transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2 group"
