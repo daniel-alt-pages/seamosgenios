@@ -47,44 +47,44 @@ const CourseTimeline = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const formatPrice = useFormatPrice();
 
-    // Timeline hardcodeado con fechas correctas (2025)
-    // Las fechas usan new Date(año, mes-1, día) para evitar problemas de zona horaria
+    // Timeline hardcodeado con fechas correctas
+    // Fase 1 ya está disponible, las demás se desbloquean en sus fechas
     const timelineData = [
         {
             title: "Fase 1: Lanzamiento",
             dateLabel: "Hasta 10 Ene",
             targetDate: new Date(2025, 0, 10), // 10 de Enero 2025
-            unlockDate: new Date(2025, 0, 1),  // 1 de Enero 2025
+            unlockDate: new Date(2024, 11, 1),  // 1 de Diciembre 2024 (YA DESBLOQUEADA)
             description: "Venta habilitada para inicio 10 Ene.",
             price: formatPrice(375000),
             basePrice: formatPrice(500000),
             savings: "$125.000 (25% OFF)"
         },
         {
-            title: "Fase 2: Febrero",
-            dateLabel: "Abre: 1 de Febrero",
-            targetDate: new Date(2025, 1, 10), // 10 de Febrero 2025
-            unlockDate: new Date(2025, 1, 1),  // 1 de Febrero 2025
-            description: "Inicio de clases grupo Febrero.",
+            title: "Fase 2: Enero",
+            dateLabel: "Abre: 1 de Enero",
+            targetDate: new Date(2025, 0, 31), // 31 de Enero 2025
+            unlockDate: new Date(2025, 0, 1),  // 1 de Enero 2025
+            description: "Inicio de clases grupo Enero.",
             price: formatPrice(325000),
             basePrice: formatPrice(500000),
             savings: "$175.000 (35% OFF)"
         },
         {
-            title: "Fase 3: Marzo",
-            dateLabel: "Abre: 1 de Marzo",
-            targetDate: new Date(2025, 2, 10), // 10 de Marzo 2025
-            unlockDate: new Date(2025, 2, 1),  // 1 de Marzo 2025
-            description: "Inicio de clases grupo Marzo.",
+            title: "Fase 3: Febrero",
+            dateLabel: "Abre: 1 de Febrero",
+            targetDate: new Date(2025, 1, 28), // 28 de Febrero 2025
+            unlockDate: new Date(2025, 1, 1),  // 1 de Febrero 2025
+            description: "Inicio de clases grupo Febrero.",
             price: formatPrice(295000),
             basePrice: formatPrice(500000),
             savings: "$205.000 (41% OFF)"
         },
         {
             title: "Fase 4: Cierre Combo",
-            dateLabel: "Cierre: 10 de Abril",
-            targetDate: new Date(2025, 3, 10), // 10 de Abril 2025
-            unlockDate: new Date(2025, 3, 1),  // 1 de Abril 2025
+            dateLabel: "Cierre: 10 de Marzo",
+            targetDate: new Date(2025, 2, 10), // 10 de Marzo 2025
+            unlockDate: new Date(2025, 2, 1),  // 1 de Marzo 2025
             description: "Última oportunidad para Combo B+A.",
             price: "Última Oportunidad",
             basePrice: formatPrice(500000),
