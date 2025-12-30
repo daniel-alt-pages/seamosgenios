@@ -34,8 +34,8 @@ export const GitHubTokenForm = ({ onTokenValidated }) => {
     const [showToken, setShowToken] = useState(false);
     const [validating, setValidating] = useState(false);
     const [error, setError] = useState(null);
-    const [repoOwner, setRepoOwner] = useState('');
-    const [repoName, setRepoName] = useState('');
+    const [repoOwner, setRepoOwner] = useState('daniel-alt-pages');
+    const [repoName, setRepoName] = useState('seamosgenios');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
