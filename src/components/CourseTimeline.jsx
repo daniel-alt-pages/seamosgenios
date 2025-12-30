@@ -45,13 +45,14 @@ const TimelineCountdown = ({ targetDate, isUnlocked, isPast }) => {
 
 const CourseTimeline = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const { config } = useSiteConfig();
+    const { config, DEFAULT_CONFIG } = useSiteConfig();
     const formatPrice = useFormatPrice();
 
-    // Obtener timeline desde Firestore o usar datos por defecto
-    const firestoreTimeline = config?.timeline || [];
+    // Usar timeline del DEFAULT_CONFIG (código local) para evitar datos desactualizados de Firestore
+    // Una vez que Firestore esté correctamente configurado, cambiar a config.timeline
+    const firestoreTimeline = DEFAULT_CONFIG?.timeline || config?.timeline || [];
 
-    // Transformar datos de Firestore al formato del componente
+    // Transformar datos al formato del componente
     const timelineData = firestoreTimeline.map(phase => ({
         title: phase.title,
         dateLabel: phase.dateLabel,
