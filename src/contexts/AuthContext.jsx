@@ -1,8 +1,7 @@
 // Context de autenticación para administradores
 import { createContext, useContext, useState, useEffect } from 'react';
 import {
-    signInWithRedirect,
-    getRedirectResult,
+    signInWithPopup,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged
@@ -77,32 +76,19 @@ export function AuthProvider({ children }) {
         return () => unsubscribe();
     }, []);
 
-    // Manejar resultado del redirect al cargar
-    useEffect(() => {
-        const handleRedirectResult = async () => {
-            try {
-                const result = await getRedirectResult(auth);
-                if (result?.user) {
-                    const adminStatus = await checkAdminStatus(result.user.email);
-                    if (!adminStatus) {
-                        await signOut(auth);
-                        setError('No tienes permisos de administrador.');
-                    }
-                }
-            } catch (err) {
-                console.error("Error handling redirect:", err);
-                setError(err.message);
-            }
-        };
-        handleRedirectResult();
-    }, []);
-
-    // Login con Google (redirect - evita errores COOP)
+    // Login con Google (popup)
     const loginWithGoogle = async () => {
         setError(null);
         try {
-            // Usar redirect en lugar de popup para evitar errores COOP
-            await signInWithRedirect(auth, googleProvider);
+            const result = await signInWithPopup(auth, googleProvider);
+            const adminStatus = await checkAdminStatus(result.user.email);
+
+            if (!adminStatus) {
+                await signOut(auth);
+                setError('No tienes permisos de administrador. Contacta al administrador del sistema.');
+                return false;
+            }
+
             return true;
         } catch (err) {
             console.error("Error signing in with Google:", err);
