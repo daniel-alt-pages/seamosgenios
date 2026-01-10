@@ -12,11 +12,11 @@ import { auth, googleProvider, db } from '../lib/firebase';
 const AuthContext = createContext(null);
 
 // Lista de emails autorizados como administradores
-// Esto también se puede mover a Firestore para mayor flexibilidad
-const ADMIN_EMAILS = [
-    'danielff999gf@gmail.com',
-    // Agrega más emails autorizados aquí
-];
+// Se lee desde las variables de entorno para mayor seguridad
+const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '')
+    .split(',')
+    .map(email => email.trim())
+    .filter(email => email.length > 0);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);

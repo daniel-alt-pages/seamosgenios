@@ -208,6 +208,98 @@ export function getRepoConfig() {
     return { ...REPO_CONFIG };
 }
 
+/**
+ * Hace commit de múltiples archivos en un solo commit usando Git Data API
+ * @param {string} token - Token de GitHub
+ * @param {string} owner - Dueño del repositorio
+ * @param {string} repo - Nombre del repositorio
+ * @param {Array} files - Array de { path, content }
+ * @param {string} message - Mensaje del commit
+ */
+export async function commitMultipleFiles(token, owner, repo, files, message) {
+    const apiBase = `https://api.github.com/repos/${owner}/${repo}`;
+    const headers = {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    };
+
+    try {
+        // 1. Obtener la referencia del branch actual
+        const refResponse = await fetch(`${apiBase}/git/ref/heads/${REPO_CONFIG.branch}`, { headers });
+        if (!refResponse.ok) throw new Error('Error obteniendo referencia del branch');
+        const refData = await refResponse.json();
+        const latestCommitSha = refData.object.sha;
+
+        // 2. Obtener el tree del commit actual
+        const commitResponse = await fetch(`${apiBase}/git/commits/${latestCommitSha}`, { headers });
+        if (!commitResponse.ok) throw new Error('Error obteniendo commit');
+        const commitData = await commitResponse.json();
+        const baseTreeSha = commitData.tree.sha;
+
+        // 3. Crear blobs para cada archivo
+        const treeItems = await Promise.all(files.map(async (file) => {
+            const blobResponse = await fetch(`${apiBase}/git/blobs`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({
+                    content: file.content,
+                    encoding: 'utf-8'
+                })
+            });
+            if (!blobResponse.ok) throw new Error(`Error creando blob para ${file.path}`);
+            const blobData = await blobResponse.json();
+
+            return {
+                path: file.path,
+                mode: '100644',
+                type: 'blob',
+                sha: blobData.sha
+            };
+        }));
+
+        // 4. Crear nuevo tree
+        const treeResponse = await fetch(`${apiBase}/git/trees`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                base_tree: baseTreeSha,
+                tree: treeItems
+            })
+        });
+        if (!treeResponse.ok) throw new Error('Error creando tree');
+        const treeData = await treeResponse.json();
+
+        // 5. Crear nuevo commit
+        const newCommitResponse = await fetch(`${apiBase}/git/commits`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                message,
+                tree: treeData.sha,
+                parents: [latestCommitSha]
+            })
+        });
+        if (!newCommitResponse.ok) throw new Error('Error creando commit');
+        const newCommitData = await newCommitResponse.json();
+
+        // 6. Actualizar referencia del branch
+        const updateRefResponse = await fetch(`${apiBase}/git/refs/heads/${REPO_CONFIG.branch}`, {
+            method: 'PATCH',
+            headers,
+            body: JSON.stringify({
+                sha: newCommitData.sha
+            })
+        });
+        if (!updateRefResponse.ok) throw new Error('Error actualizando referencia');
+
+        return { success: true, commit: newCommitData };
+    } catch (error) {
+        console.error('Error in commitMultipleFiles:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 export default {
     hasValidToken,
     getToken,
@@ -217,6 +309,7 @@ export default {
     validateToken,
     getFileContent,
     commitFile,
+    commitMultipleFiles,
     getRecentCommits,
     setRepoConfig,
     getRepoConfig

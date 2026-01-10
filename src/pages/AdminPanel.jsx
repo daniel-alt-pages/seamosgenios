@@ -23,11 +23,15 @@ import {
     ChevronUp,
     Star,
     Zap,
-    Github
+    Github,
+    BarChart3,
+    LayoutDashboard
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useSiteConfig, useFormatPrice } from '../contexts/SiteConfigContext';
 import GitHubIntegration from '../components/admin/GitHubIntegration';
+import GridDashboard from '../components/admin/GridDashboard';
+import AnalyticsDashboard from '../components/admin/AnalyticsDashboard';
 
 // Componente de Login
 const AdminLogin = () => {
@@ -984,7 +988,7 @@ const TimelineEditor = ({ timeline, onSave }) => {
 const AdminPanel = () => {
     const { user, isAdmin, logout, loading: authLoading } = useAuth();
     const { config, loading: configLoading, updatePlans, updateTheme, updateHero, updateBrand, updateTimeline } = useSiteConfig();
-    const [activeTab, setActiveTab] = useState('plans');
+    const [activeTab, setActiveTab] = useState('dashboard');
     const [showPreview, setShowPreview] = useState(false);
 
     // Si está cargando
@@ -1005,6 +1009,8 @@ const AdminPanel = () => {
     }
 
     const tabs = [
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, color: 'text-red-400' },
+        { id: 'analytics', label: 'Analytics', icon: BarChart3, color: 'text-cyan-400' },
         { id: 'plans', label: 'Planes', icon: DollarSign, color: 'text-green-400' },
         { id: 'timeline', label: 'Cronograma', icon: Clock, color: 'text-orange-400' },
         { id: 'theme', label: 'Tema', icon: Palette, color: 'text-purple-400' },
@@ -1116,8 +1122,28 @@ const AdminPanel = () => {
                 </div>
 
                 {/* Tab Content */}
-                <div className="max-w-4xl">
+                <div className={activeTab === 'dashboard' || activeTab === 'analytics' ? 'max-w-full' : 'max-w-4xl'}>
                     <AnimatePresence mode="wait">
+                        {activeTab === 'dashboard' && (
+                            <motion.div
+                                key="dashboard"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 20 }}
+                            >
+                                <GridDashboard />
+                            </motion.div>
+                        )}
+                        {activeTab === 'analytics' && (
+                            <motion.div
+                                key="analytics"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 20 }}
+                            >
+                                <AnalyticsDashboard />
+                            </motion.div>
+                        )}
                         {activeTab === 'plans' && (
                             <motion.div
                                 key="plans"

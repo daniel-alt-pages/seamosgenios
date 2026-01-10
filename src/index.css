@@ -258,6 +258,41 @@ body::before {
   will-change: transform;
 }
 
+/* Optimizaciones de rendimiento */
+.will-change-transform {
+  will-change: transform;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Shimmer animation for skeleton loading */
+@keyframes shimmer-skeleton {
+
+  /* Renamed to avoid conflict */
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* GridStack custom overrides */
+.grid-stack {
+  min-height: 400px;
+}
+
+.grid-stack-item>.grid-stack-item-content {
+  background: transparent !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.grid-stack-placeholder>.placeholder-content {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 2px dashed rgba(239, 68, 68, 0.3) !important;
+  border-radius: 12px;
+}
+
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }

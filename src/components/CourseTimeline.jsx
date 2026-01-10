@@ -51,68 +51,40 @@ const CourseTimeline = () => {
     const currentYear = currentDate.getFullYear();
     const nextYear = currentYear + 1;
 
-    // Datos hardcodeados por defecto (fallback)
-    const defaultTimelineData = [
-        {
-            title: "Fase 1: Lanzamiento",
-            dateLabel: "Hasta 10 Dic",
-            targetDate: new Date(currentYear, 11, 10), // 10 Dic
-            status: "En Curso",
-            description: "Venta habilitada para inicio 10 Dic.",
-            unlockDate: new Date(currentYear, 11, 1), // 1 Dic (YA DESBLOQUEADA)
-            price: 400000,
-            basePrice: 500000,
-            savings: "$100.000 (20% OFF)"
-        },
-        {
-            title: "Fase 2: Enero",
-            dateLabel: "Abre: 1 de Enero",
-            targetDate: new Date(nextYear, 0, 10), // 10 Ene
-            status: "Próximamente",
-            description: "Inicio de clases grupo Enero.",
-            unlockDate: new Date(nextYear, 0, 1), // 1 Ene
-            price: 425000,
-            basePrice: 500000,
-            savings: "$75.000 (15% OFF)"
-        },
-        {
-            title: "Fase 3: Febrero",
-            dateLabel: "Abre: 1 de Febrero",
-            targetDate: new Date(nextYear, 1, 10), // 10 Feb
-            status: "Próximamente",
-            description: "Inicio de clases grupo Febrero.",
-            unlockDate: new Date(nextYear, 1, 1), // 1 Feb
-            price: 375000,
-            basePrice: 500000,
-            savings: "$125.000 (25% OFF)"
-        },
-        {
-            title: "Fase 4: Cierre Combo",
-            dateLabel: "Cierre: 10 de Marzo",
-            targetDate: new Date(nextYear, 2, 10), // 10 Mar
-            status: "Próximamente",
-            description: "Última oportunidad para Combo B+A.",
-            unlockDate: new Date(nextYear, 2, 1), // 1 Mar
-            price: 350000,
-            basePrice: 500000,
-            savings: "$150.000 (30% OFF)"
-        }
+    // FECHAS HARDCODEADAS - NO SE LEEN DE FIRESTORE
+    // Fase 1: Ya desbloqueada (1 Dic 2024)
+    // Fase 2, 3, 4: Se desbloquean en sus meses respectivos
+    const fixedDates = [
+        { unlockDate: new Date(currentYear, 11, 1), targetDate: new Date(currentYear, 11, 31) },  // Fase 1: 1 Dic - 31 Dic
+        { unlockDate: new Date(nextYear, 0, 1), targetDate: new Date(nextYear, 0, 31) },          // Fase 2: 1 Ene - 31 Ene
+        { unlockDate: new Date(nextYear, 1, 1), targetDate: new Date(nextYear, 1, 28) },          // Fase 3: 1 Feb - 28 Feb
+        { unlockDate: new Date(nextYear, 2, 1), targetDate: new Date(nextYear, 2, 10) },          // Fase 4: 1 Mar - 10 Mar
     ];
 
-    // Si hay datos de Firestore, usarlos; sino usar los hardcodeados
-    const timelineData = (config?.timeline?.length > 0)
-        ? config.timeline.map(phase => ({
-            title: phase.title,
-            dateLabel: phase.dateLabel,
-            targetDate: new Date(phase.targetDate),
-            unlockDate: new Date(phase.unlockDate),
-            description: phase.description,
-            price: phase.price,
-            priceText: phase.priceText,
-            basePrice: phase.basePrice || 500000,
-            savings: phase.savingsText || ""
-        }))
-        : defaultTimelineData;
+    // Datos por defecto (textos y precios)
+    const defaultData = [
+        { title: "Fase 1: Lanzamiento", dateLabel: "Hasta 31 Dic", description: "Venta habilitada para inicio inmediato.", price: 400000, basePrice: 500000, savings: "$100.000 (20% OFF)" },
+        { title: "Fase 2: Enero", dateLabel: "Abre: 1 de Enero", description: "Inicio de clases grupo Enero.", price: 425000, basePrice: 500000, savings: "$75.000 (15% OFF)" },
+        { title: "Fase 3: Febrero", dateLabel: "Abre: 1 de Febrero", description: "Inicio de clases grupo Febrero.", price: 375000, basePrice: 500000, savings: "$125.000 (25% OFF)" },
+        { title: "Fase 4: Cierre Combo", dateLabel: "Cierre: 10 de Marzo", description: "Última oportunidad para Combo B+A.", price: 350000, basePrice: 500000, savings: "$150.000 (30% OFF)" },
+    ];
+
+    // Combinar: Fechas SIEMPRE del código, precios de Firestore si existen
+    const timelineData = defaultData.map((item, index) => {
+        const firestoreData = config?.timeline?.[index];
+        return {
+            title: firestoreData?.title || item.title,
+            dateLabel: firestoreData?.dateLabel || item.dateLabel,
+            description: firestoreData?.description || item.description,
+            price: firestoreData?.price ?? item.price,
+            priceText: firestoreData?.priceText,
+            basePrice: firestoreData?.basePrice || item.basePrice,
+            savings: firestoreData?.savingsText || item.savings,
+            // FECHAS SIEMPRE DEL CÓDIGO - NUNCA DE FIRESTORE
+            unlockDate: fixedDates[index].unlockDate,
+            targetDate: fixedDates[index].targetDate,
+        };
+    });
 
     useEffect(() => {
         const dateInterval = setInterval(() => {
