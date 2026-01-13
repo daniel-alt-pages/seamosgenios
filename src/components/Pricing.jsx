@@ -64,16 +64,27 @@ const Pricing = () => {
     const firestorePlans = config?.plans || [];
 
     // Transformar planes de Firestore al formato esperado por el componente
-    const plans = firestorePlans.map(plan => ({
-        ...plan,
-        price: formatPrice(plan.price),
-        originalPrice: plan.originalPrice ? formatPrice(plan.originalPrice) : null,
-        whatsappLink: `https://wa.me/${config?.brand?.whatsappNumber || '573008871908'}?text=${encodeURIComponent(`Hola, quiero inscribirme al ${plan.name} de ${formatPrice(plan.price)}. ¿Podrían darme más información?`)}`,
-        countdownTarget: plan.inscriptionDeadline,
-        countdownLabel: plan.urgent ? "Inscripciones cierran en" : "Inicio de clases en",
-        startDate: plan.startDate ? new Date(plan.startDate) : null,
-        endDate: plan.endDate ? new Date(plan.endDate) : null
-    }));
+    // IMPORTANTE: Plan Calendario B (solo) está PERMANENTEMENTE BLOQUEADO
+    const plans = firestorePlans.map(plan => {
+        // Detectar si es el Plan Calendario B solo (sin combo/sin A)
+        const isCalendarioBOnly = (plan.id === "plan-b" || plan.id === "plan-calendario-b") ||
+            (plan.name?.includes("Calendario B") && !plan.name?.includes("+") && !plan.name?.includes("Combo") && !plan.name?.includes("A"));
+
+        return {
+            ...plan,
+            // BLOQUEO PERMANENTE para Plan Calendario B solo
+            available: isCalendarioBOnly ? false : plan.available,
+            expired: isCalendarioBOnly ? true : plan.expired,
+            expiredMessage: isCalendarioBOnly ? "Las inscripciones para el Calendario B han cerrado. ¡Inscríbete al Plan Calendario A!" : plan.expiredMessage,
+            price: formatPrice(plan.price),
+            originalPrice: plan.originalPrice ? formatPrice(plan.originalPrice) : null,
+            whatsappLink: `https://wa.me/${config?.brand?.whatsappNumber || '573008871908'}?text=${encodeURIComponent(`Hola, quiero inscribirme al ${plan.name} de ${formatPrice(plan.price)}. ¿Podrían darme más información?`)}`,
+            countdownTarget: plan.inscriptionDeadline,
+            countdownLabel: plan.urgent ? "Inscripciones cierran en" : "Inicio de clases en",
+            startDate: plan.startDate ? new Date(plan.startDate) : null,
+            endDate: plan.endDate ? new Date(plan.endDate) : null
+        };
+    });
 
     const getIconForPlan = (index) => {
         const icons = [Star, Zap, Crown];
@@ -156,32 +167,31 @@ const Pricing = () => {
                                     : 'border border-white/5 hover:border-white/10 hover-lift'
                                     } bg-gradient-to-br ${plan.popular ? 'from-red-900/50 to-orange-900/50' : 'from-gray-800/50 to-gray-900/50'} p-5 md:p-8`}>
 
-                                    {/* Not Available Overlay */}
+                                    {/* Not Available Overlay - Compacto para móvil */}
                                     {!plan.available && (
-                                        <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-10 flex flex-col items-center justify-center text-center p-8 rounded-3xl">
+                                        <div className="absolute inset-0 bg-black/95 backdrop-blur-md z-10 flex flex-col items-center justify-center text-center p-4 md:p-8 rounded-3xl">
                                             {plan.expired ? (
                                                 <>
-                                                    <Clock className="w-16 h-16 text-orange-500 mb-6 animate-pulse-glow" />
-                                                    <h3 className="text-3xl font-black mb-3 text-white">{plan.name}</h3>
-                                                    <div className="px-4 py-2 bg-orange-500/20 border border-orange-500/30 rounded-full mb-4">
-                                                        <p className="text-orange-400 text-sm font-bold uppercase tracking-wider">
+                                                    <Clock className="w-10 h-10 md:w-14 md:h-14 text-orange-500 mb-3 md:mb-4" />
+                                                    <div className="px-4 py-2 bg-orange-500/20 border border-orange-500/30 rounded-full mb-3">
+                                                        <p className="text-orange-400 text-xs md:text-sm font-bold uppercase tracking-wider">
                                                             Inscripciones Cerradas
                                                         </p>
                                                     </div>
-                                                    <p className="text-gray-400 text-sm">
+                                                    <p className="text-gray-400 text-xs md:text-sm max-w-[250px]">
                                                         {plan.expiredMessage}
                                                     </p>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <Lock className="w-16 h-16 text-red-500 mb-6 animate-pulse-glow" />
-                                                    <h3 className="text-3xl font-black mb-3 text-white">{plan.name}</h3>
-                                                    <p className="text-gray-400 text-sm mb-4">
+                                                    <Lock className="w-10 h-10 md:w-14 md:h-14 text-red-500 mb-3 md:mb-4" />
+                                                    <h3 className="text-xl md:text-2xl font-black mb-2 text-white">{plan.name}</h3>
+                                                    <p className="text-gray-400 text-xs md:text-sm mb-3 max-w-[250px]">
                                                         {plan.description}
                                                     </p>
                                                     {plan.availableDate && (
-                                                        <div className="mt-4 px-4 py-2 glass-strong rounded-full text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-2">
-                                                            <CalendarIcon size={14} />
+                                                        <div className="mt-2 px-3 py-1.5 glass-strong rounded-full text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-2">
+                                                            <CalendarIcon size={12} />
                                                             {formatDate(plan.availableDate)}
                                                         </div>
                                                     )}

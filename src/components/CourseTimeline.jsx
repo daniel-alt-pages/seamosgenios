@@ -64,9 +64,9 @@ const CourseTimeline = () => {
     // Datos por defecto (textos y precios)
     const defaultData = [
         { title: "Fase 1: Lanzamiento", dateLabel: "Hasta 31 Dic", description: "Venta habilitada para inicio inmediato.", price: 400000, basePrice: 500000, savings: "$100.000 (20% OFF)" },
-        { title: "Fase 2: Enero", dateLabel: "Abre: 1 de Enero", description: "Inicio de clases grupo Enero.", price: 425000, basePrice: 500000, savings: "$75.000 (15% OFF)" },
-        { title: "Fase 3: Febrero", dateLabel: "Abre: 1 de Febrero", description: "Inicio de clases grupo Febrero.", price: 375000, basePrice: 500000, savings: "$125.000 (25% OFF)" },
-        { title: "Fase 4: Cierre Combo", dateLabel: "Cierre: 10 de Marzo", description: "Última oportunidad para Combo B+A.", price: 350000, basePrice: 500000, savings: "$150.000 (30% OFF)" },
+        { title: "Fase 2: Calendario A", dateLabel: "10 de Enero", description: "¡Plazas abiertas para Calendario A! Inicio de clases 10 de enero.", price: 325000, basePrice: 500000, savings: "$175.000 (35% OFF)" },
+        { title: "Fase 3: Febrero", dateLabel: "Abre: 1 de Febrero", description: "Inicio de clases grupo Febrero.", price: 295000, basePrice: 500000, savings: "$205.000 (41% OFF)" },
+        { title: "Fase 4: Cierre Combo", dateLabel: "Cierre: 10 de Marzo", description: "Última oportunidad para Combo B+A.", price: 250000, basePrice: 500000, savings: "$250.000 (50% OFF)" },
     ];
 
     // Combinar: Fechas SIEMPRE del código, precios de Firestore si existen
@@ -77,7 +77,8 @@ const CourseTimeline = () => {
             dateLabel: firestoreData?.dateLabel || item.dateLabel,
             description: firestoreData?.description || item.description,
             price: firestoreData?.price ?? item.price,
-            priceText: firestoreData?.priceText,
+            priceText: firestoreData?.priceText || item.priceText,
+            priceLocked: firestoreData?.priceLocked ?? item.priceLocked ?? false,
             basePrice: firestoreData?.basePrice || item.basePrice,
             savings: firestoreData?.savingsText || item.savings,
             // FECHAS SIEMPRE DEL CÓDIGO - NUNCA DE FIRESTORE
