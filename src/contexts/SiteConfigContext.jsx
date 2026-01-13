@@ -52,7 +52,7 @@ const DEFAULT_CONFIG = {
         {
             id: "plan-combo",
             name: "Plan Calendario A (Inicio Enero)",
-            price: 325000,
+            price: 375000,
             originalPrice: 500000,
             currency: "COP",
             available: true,

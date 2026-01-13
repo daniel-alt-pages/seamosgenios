@@ -65,10 +65,17 @@ const Pricing = () => {
 
     // Transformar planes de Firestore al formato esperado por el componente
     // IMPORTANTE: Plan Calendario B (solo) está PERMANENTEMENTE BLOQUEADO
+    // IMPORTANTE: Precio del Plan Combo forzado a $375.000
     const plans = firestorePlans.map(plan => {
         // Detectar si es el Plan Calendario B solo (sin combo/sin A)
         const isCalendarioBOnly = (plan.id === "plan-b" || plan.id === "plan-calendario-b") ||
             (plan.name?.includes("Calendario B") && !plan.name?.includes("+") && !plan.name?.includes("Combo") && !plan.name?.includes("A"));
+
+        // Detectar si es el Plan Combo (cualquier variante)
+        const isCombo = plan.id === "plan-combo" || plan.name?.includes("+") || plan.name?.includes("Combo");
+
+        // PRECIO FORZADO: Plan Combo = $375.000
+        const forcedPrice = isCombo ? 375000 : plan.price;
 
         return {
             ...plan,
@@ -76,9 +83,9 @@ const Pricing = () => {
             available: isCalendarioBOnly ? false : plan.available,
             expired: isCalendarioBOnly ? true : plan.expired,
             expiredMessage: isCalendarioBOnly ? "Las inscripciones para el Calendario B han cerrado. ¡Inscríbete al Plan Calendario A!" : plan.expiredMessage,
-            price: formatPrice(plan.price),
+            price: formatPrice(forcedPrice),
             originalPrice: plan.originalPrice ? formatPrice(plan.originalPrice) : null,
-            whatsappLink: `https://wa.me/${config?.brand?.whatsappNumber || '573008871908'}?text=${encodeURIComponent(`Hola, quiero inscribirme al ${plan.name} de ${formatPrice(plan.price)}. ¿Podrían darme más información?`)}`,
+            whatsappLink: `https://wa.me/${config?.brand?.whatsappNumber || '573008871908'}?text=${encodeURIComponent(`Hola, quiero inscribirme al ${plan.name} de ${formatPrice(forcedPrice)}. ¿Podrían darme más información?`)}`,
             countdownTarget: plan.inscriptionDeadline,
             countdownLabel: plan.urgent ? "Inscripciones cierran en" : "Inicio de clases en",
             startDate: plan.startDate ? new Date(plan.startDate) : null,

@@ -62,26 +62,20 @@ const CourseTimeline = () => {
     ];
 
     // Datos por defecto (textos y precios)
+    // IMPORTANTE: Fase 1 ya cerró, Fase 2 (Enero) está activa, Fases 3-4 están bloqueadas
     const defaultData = [
-        { title: "Fase 1: Lanzamiento", dateLabel: "Hasta 31 Dic", description: "Venta habilitada para inicio inmediato.", price: 400000, basePrice: 500000, savings: "$100.000 (20% OFF)" },
-        { title: "Fase 2: Calendario A", dateLabel: "10 de Enero", description: "¡Plazas abiertas para Calendario A! Inicio de clases 10 de enero.", price: 325000, basePrice: 500000, savings: "$175.000 (35% OFF)" },
+        { title: "Fase 1: Lanzamiento", dateLabel: "Cerrada", description: "Este período de inscripción ya finalizó.", price: 400000, basePrice: 500000, savings: "$100.000 (20% OFF)", closed: true },
+        { title: "Fase 2: Calendario A", dateLabel: "ACTIVA - Enero", description: "¡Inscripciones abiertas para Calendario A! Inicio de clases 10 de enero.", price: 375000, basePrice: 500000, savings: "$125.000 (25% OFF)" },
         { title: "Fase 3: Febrero", dateLabel: "Abre: 1 de Febrero", description: "Inicio de clases grupo Febrero.", price: 295000, basePrice: 500000, savings: "$205.000 (41% OFF)" },
-        { title: "Fase 4: Cierre Combo", dateLabel: "Cierre: 10 de Marzo", description: "Última oportunidad para Combo B+A.", price: 250000, basePrice: 500000, savings: "$250.000 (50% OFF)" },
+        { title: "Fase 4: Cierre Combo", dateLabel: "Cierre: 10 de Marzo", description: "Última oportunidad para inscripciones.", price: 250000, basePrice: 500000, savings: "$250.000 (50% OFF)" },
     ];
 
-    // Combinar: Fechas SIEMPRE del código, precios de Firestore si existen
+    // Combinar: Fechas y PRECIOS SIEMPRE del código local (NO Firestore)
+    // Esto asegura que los valores se muestren correctamente sin depender de Firestore
     const timelineData = defaultData.map((item, index) => {
-        const firestoreData = config?.timeline?.[index];
         return {
-            title: firestoreData?.title || item.title,
-            dateLabel: firestoreData?.dateLabel || item.dateLabel,
-            description: firestoreData?.description || item.description,
-            price: firestoreData?.price ?? item.price,
-            priceText: firestoreData?.priceText || item.priceText,
-            priceLocked: firestoreData?.priceLocked ?? item.priceLocked ?? false,
-            basePrice: firestoreData?.basePrice || item.basePrice,
-            savings: firestoreData?.savingsText || item.savings,
-            // FECHAS SIEMPRE DEL CÓDIGO - NUNCA DE FIRESTORE
+            ...item,
+            // FECHAS Y PRECIOS SIEMPRE DEL CÓDIGO - NUNCA DE FIRESTORE
             unlockDate: fixedDates[index].unlockDate,
             targetDate: fixedDates[index].targetDate,
         };
@@ -120,8 +114,12 @@ const CourseTimeline = () => {
 
                 <div className="relative ml-0 md:mx-auto max-w-4xl pl-12 md:pl-0">
                     {timelineData.map((item, index) => {
-                        const isUnlocked = currentDate >= item.unlockDate;
-                        const isPast = currentDate > item.targetDate;
+                        // LÓGICA FORZADA: Solo Fase 2 (índice 1) está activa
+                        // Fase 1 (índice 0): cerrada/pasada
+                        // Fases 3-4 (índices 2-3): bloqueadas/futuras
+                        const isClosed = item.closed === true || index === 0; // Fase 1 está cerrada
+                        const isUnlocked = index === 1; // Solo Fase 2 (Enero) está activa
+                        const isPast = isClosed;
                         const displayPrice = item.price ? formatPrice(item.price) : (item.priceText || "Próximamente");
                         const displayBasePrice = formatPrice(item.basePrice);
 
